@@ -4,18 +4,24 @@ import efgroup.EckoOfTheFox_backend.comment.Comment;
 import efgroup.EckoOfTheFox_backend.like.Like;
 import efgroup.EckoOfTheFox_backend.opinion.Opinion;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
 @Entity(name = "eofox_users")
 @NoArgsConstructor(force = true)
+@AllArgsConstructor
 @Getter
 @Setter
-public class User {
+public class User implements UserDetails {
     @Id
     private UUID userID;
 
@@ -24,6 +30,9 @@ public class User {
 
     @Column(unique = true)
     private String username;
+
+    @Column(unique = true)
+    private String email;
 
     @Column
     private String password;
@@ -42,4 +51,27 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes;
+
+    public User(UUID userID, String username, String password, String openIdConnect, String openIDConnectProvider) {
+        this.userID = userID;
+        this.username = username;
+        this.password = password;
+        this.openIdConnect = openIdConnect;
+        this.openIDConnectProvider = openIDConnectProvider;
+        this.opinions = new ArrayList<>();
+        this.comments = new ArrayList<>();
+        this.likes = new ArrayList<>();
+    }
+
+    public User(UUID userID, String email, String openIdConnect, String openIDConnectProvider) {
+        this.userID = userID;
+        this.email = email;
+        this.openIdConnect = openIdConnect;
+        this.openIDConnectProvider = openIDConnectProvider;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
 }
