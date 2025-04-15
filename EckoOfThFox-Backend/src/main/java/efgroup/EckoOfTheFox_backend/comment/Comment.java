@@ -1,0 +1,39 @@
+package efgroup.EckoOfTheFox_backend.comment;
+
+import efgroup.EckoOfTheFox_backend.like.Like;
+import efgroup.EckoOfTheFox_backend.opinion.Opinion;
+import efgroup.EckoOfTheFox_backend.user.User;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
+
+@Entity
+@AllArgsConstructor
+@Getter
+@Setter
+public class Comment {
+
+    @Id
+    private UUID commentID;
+
+    @Column
+    private Date publicationDate;
+
+    @Column
+    private String commentText;
+
+    @ManyToOne
+    private User author;
+
+    @ManyToOne
+    private Opinion opinion;
+
+    @OneToMany(mappedBy = "commentLikedID", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes;
+}
