@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,7 +17,7 @@ public class UserController {
 
     //register
     @PostMapping("/register-user")
-    public ResponseEntity registerAccount(@RequestBody UserPasswordDTO userPasswordDTO){
+    public ResponseEntity<?> registerAccount(@RequestBody UserPasswordDTO userPasswordDTO){
         try {
             User user = userService.createUser(userPasswordDTO);
             return ResponseEntity.ok(user);
@@ -27,7 +28,7 @@ public class UserController {
 
     //login
     @PutMapping("/login")
-    public ResponseEntity login(@RequestBody UserPasswordDTO userPasswordDTO) {
+    public ResponseEntity<?> login(@RequestBody UserPasswordDTO userPasswordDTO) {
         try {
             return ResponseEntity.ok(userService.login(userPasswordDTO));
         } catch (Exception e) {
@@ -35,8 +36,22 @@ public class UserController {
         }
     }
 
+    //see info
+    @GetMapping("/info")
+    public ResponseEntity<?> getUserInfo(@AuthenticationPrincipal User user) {
+        try {
+            return ResponseEntity.ok(userService.getUserInfo(user));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(e.getMessage());
+        }
+    }
     //update
-    
+
+    public ResponseEntity<?> updateUserInfo(@AuthenticationPrincipal User user, UserDTO userDTO) {
+        try {
+
+        }
+    }
 
     //remove
 

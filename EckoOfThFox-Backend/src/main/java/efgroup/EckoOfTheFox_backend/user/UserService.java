@@ -46,6 +46,21 @@ public class UserService implements UserDetailsService {
         return jwtService.generateToken(user.getUserID());
     }
 
+    public User getUserInfo(User user) throws Exception {
+        return userRepository.findById(user.getUserID()).orElseThrow(() -> new Exception ("Unable to get user data."));
+    }
+
+    public User updateUser(User user, UserDTO userDTO) throws IllegalAccessException {
+        if (user.getUserID() != userDTO.getUserID()) {
+            throw new IllegalAccessException("You are not allowed to modify this user.");
+        }
+        user.setEmail(userDTO.getEmail());
+        user.setUsername(userDTO.getUsername());
+        return userRepository.save(user);
+    }
+
+
+
     private boolean samePasswords (String password, String passwordCheck) {
         return (password.equals(passwordCheck));
     }
