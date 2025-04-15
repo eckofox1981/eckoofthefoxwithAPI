@@ -52,19 +52,21 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes;
 
-    public User(UUID userID, String username, String password, String openIdConnect, String openIDConnectProvider) {
+    public User(UUID userID, String username, String email, String password) {
         this.userID = userID;
         this.username = username;
+        this.email = email;
         this.password = password;
-        this.openIdConnect = openIdConnect;
-        this.openIDConnectProvider = openIDConnectProvider;
+        this.openIdConnect = "";
+        this.openIDConnectProvider = "";
         this.opinions = new ArrayList<>();
         this.comments = new ArrayList<>();
         this.likes = new ArrayList<>();
     }
 
-    public User(UUID userID, String email, String openIdConnect, String openIDConnectProvider) {
+    public User(UUID userID, String username, String email, String openIdConnect, String openIDConnectProvider) {
         this.userID = userID;
+        this.username = username;
         this.email = email;
         this.openIdConnect = openIdConnect;
         this.openIDConnectProvider = openIDConnectProvider;
