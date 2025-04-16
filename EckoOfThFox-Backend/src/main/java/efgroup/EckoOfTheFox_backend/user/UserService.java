@@ -50,13 +50,27 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(user.getUserID()).orElseThrow(() -> new Exception ("Unable to get user data."));
     }
 
-    public User updateUser(User user, UserDTO userDTO) throws IllegalAccessException {
+    public User updateUser(User user, UserDTO userDTO) throws IllegalAccessException, IllegalArgumentException {
         if (user.getUserID() != userDTO.getUserID()) {
             throw new IllegalAccessException("You are not allowed to modify this user.");
+        }
+        if (userDTO.getEmail().isBlank()) {
+            throw new IllegalArgumentException("Email cannot be empty.");
+        }
+        if (userDTO.getUsername().isBlank()) {
+            throw new IllegalArgumentException("Username cannot be empty.");
         }
         user.setEmail(userDTO.getEmail());
         user.setUsername(userDTO.getUsername());
         return userRepository.save(user);
+    }
+
+    public void removeAccout(User user) throws Exception {
+        try {
+            userRepository.delete(user);
+        } catch (Exception e) {
+            throw new Exception("Unable to remove account.");
+        }
     }
 
 
