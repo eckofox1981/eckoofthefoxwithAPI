@@ -2,12 +2,11 @@ package efgroup.EckoOfTheFox_backend.opinion;
 
 import efgroup.EckoOfTheFox_backend.user.User;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.NotFound;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -39,6 +38,7 @@ public class OpinionService {
     }
 
     public Opinion saveOpinion(User user, OpinionDTO opinionDTO) throws IllegalArgumentException {
+
         if (opinionDTO.getImgType().equalsIgnoreCase("jpg") ||
                 opinionDTO.getImgType().equalsIgnoreCase("jpeg") ||
                 opinionDTO.getImgType().equalsIgnoreCase("png")) {
@@ -58,17 +58,33 @@ public class OpinionService {
     }
 
     public Opinion updateOpinion(User user, OpinionDTO opinionDTO) throws IllegalAccessException, NoSuchElementException {
-        Opinion opinionToUpdate = opinionRepository.findById(opinionDTO.getOpinionID()).orElseThrow(() -> new NoSuchElementException("The opinon was not found in the database."));
+        Opinion opinionToUpdate = opinionRepository.findById(opinionDTO.getOpinionID()).orElseThrow(() -> new NoSuchElementException("The opinion was not found in the database."));
+
         if (opinionToUpdate.getAuthor().getUserID() != user.getUserID()) {
             throw new IllegalAccessException("You are not allowed to change this opinion.");
         }
 
         opinionToUpdate.setTitle(opinionDTO.getTitle());
         opinionToUpdate.setOpinionText(opinionDTO.getOpinionText());
-        opinionToUpdate.setImgName(opinionToUpdate.getImgName());
-        opinionToUpdate.setImgContent(opinionDTO.getImgContent());
-        opinionToUpdate.setImgType(opinionDTO.getImgType());
 
-        //TODO finish
+        if (opinionDTO.getImgType().equalsIgnoreCase("jpg") ||
+                opinionDTO.getImgType().equalsIgnoreCase("jpeg") ||
+                opinionDTO.getImgType().equalsIgnoreCase("png")){
+                opinionToUpdate.setImgName(opinionToUpdate.getImgName());
+                opinionToUpdate.setImgContent(opinionDTO.getImgContent());
+                opinionToUpdate.setImgType(opinionDTO.getImgType());
+        }
+
+        return opinionRepository.save(opinionToUpdate);
+    }
+
+    public void deleteOpinion(User user, UUID opinionId) throws IllegalAccessException, NoSuchElementException {
+        Opinion opinionToDelete = opinionRepository.findById(opinionId).orElseThrow(() -> new NoSuchElementException("The opinion was not found in the database."));
+
+        if (opinionToDelete.getAuthor().getUserID() != user.getUserID()) {
+            throw new IllegalAccessException("You are not allowed to change this opinion.");
+        }
+
+        opinionRepository.delete(opinionToDelete);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,7 +47,7 @@ public class OpinionController {
     }
 
     //post
-    @PostMapping("post-opinion")
+    @PostMapping("/post-opinion")
     public ResponseEntity<?> submitOpinion(@AuthenticationPrincipal User user, @RequestBody OpinionDTO opinionDTO) {
         try {
             OpinionDTO savedOpinionDTO = OpinionDTO.fromOpinion(opinionService.saveOpinion(user, opinionDTO));
@@ -57,8 +58,28 @@ public class OpinionController {
     }
 
     //update
-
+    @PutMapping("/edit-opinion")
+    public ResponseEntity<?> updateOpinion(@AuthenticationPrincipal User user, @RequestBody OpinionDTO opinionDTO) {
+        try {
+            Opinion updatedOpinion = opinionService.updateOpinion(user, opinionDTO);
+            return ResponseEntity.ok(updatedOpinion);
+        } catch (IllegalAccessException e) {
+            return ResponseEntity.status(401).body(e.getMessage());
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
 
     //delete
-
+    @DeleteMapping("/delete-opinion")
+    public ResponseEntity<?> deleteOpinion(@AuthenticationPrincipal User user, @PathVariable UUID opinionID) {
+        try {
+            opinionService.deleteOpinion(user, opinionID);
+            return ResponseEntity.status(204).body("Opinion deleted.");
+        } catch (IllegalAccessException e) {
+            return ResponseEntity.status(401).body(e.getMessage());
+        } catch (NoSuchElementException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
 }
