@@ -1,12 +1,15 @@
 package efgroup.EckoOfTheFox_backend.opinion;
 
+import efgroup.EckoOfTheFox_backend.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,7 +26,7 @@ public class OpinionController {
                     .map(OpinionDTO::fromOpinion)
                     .toList();
             return ResponseEntity.ok(opinionDTOS);
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
     }
@@ -37,18 +40,24 @@ public class OpinionController {
                     .map(OpinionDTO::fromOpinion)
                     .toList();
             return ResponseEntity.ok(opinionDTOS);
-        } catch (Exception e) {
+        } catch (NoSuchElementException e) {
             return ResponseEntity.status(404).body(e.getMessage());
         }
     }
 
     //post
     @PostMapping("post-opinion")
-    public ResponseEntity<?> submitOpinion(@RequestBody OpinionDTO opinionDTO) {
-
+    public ResponseEntity<?> submitOpinion(@AuthenticationPrincipal User user, @RequestBody OpinionDTO opinionDTO) {
+        try {
+            OpinionDTO savedOpinionDTO = OpinionDTO.fromOpinion(opinionService.saveOpinion(user, opinionDTO));
+            return ResponseEntity.ok(savedOpinionDTO);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(405).body(e.getMessage());
+        }
     }
 
     //update
+
 
     //delete
 
