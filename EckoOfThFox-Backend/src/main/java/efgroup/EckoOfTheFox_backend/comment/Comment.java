@@ -36,4 +36,12 @@ public class Comment {
 
     @OneToMany(mappedBy = "commentLikedID", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes;
+
+    public Comment(UUID commentID, Date publicationDate, String commentText, User author, Opinion opinion) {
+        this.commentID = commentID;
+        this.publicationDate = publicationDate;
+        this.commentText = commentText;
+        this.author = author;
+        this.opinion = opinion;
+    }
 }
