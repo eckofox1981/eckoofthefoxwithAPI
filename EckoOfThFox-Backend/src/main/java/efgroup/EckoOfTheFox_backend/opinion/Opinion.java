@@ -40,7 +40,7 @@ public class Opinion {
     private byte[] imgContent;
 
     @Column
-    private String type;
+    private String imgType;
 
     @ManyToOne
     private User author;
@@ -50,4 +50,15 @@ public class Opinion {
 
     @OneToMany(mappedBy = "opinionLikedID", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes;
+
+    public Opinion(UUID opinionID, String title, String opinionText, String imgName, byte[] imgContent, String imgType, User author) {
+        this.opinionID = opinionID;
+        this.publicationDate = new Date();
+        this.title = title;
+        this.opinionText = opinionText;
+        this.imgName = imgName;
+        this.imgContent = imgContent;
+        this.imgType = imgType;
+        this.author = author;
+    }
 }
