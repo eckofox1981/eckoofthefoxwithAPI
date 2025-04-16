@@ -19,6 +19,14 @@ public class CommentDTO {
     private String author;
     private List<UUID> likes;
 
+    public CommentDTO(UUID commentID, Date publicationDate, String opinionTitle, String commentText, String author) {
+        this.commentID = commentID;
+        this.publicationDate = publicationDate;
+        this.opinionTitle = opinionTitle;
+        this.commentText = commentText;
+        this.author = author;
+    }
+
     public static CommentDTO fromComment(Comment comment) {
         return new CommentDTO(
                 comment.getCommentID(),

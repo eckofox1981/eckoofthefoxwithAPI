@@ -7,4 +7,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
+
+    //get
+
+    //post
+
+    //update
+
+    //delete
 }
