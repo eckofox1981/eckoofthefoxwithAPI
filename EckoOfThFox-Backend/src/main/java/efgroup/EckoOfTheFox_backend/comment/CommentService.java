@@ -26,7 +26,7 @@ public class CommentService {
 
     //get
     /**
-     * behövs det? hämtas i samband med opinions
+     * behövs det? hämtas i samband med opinions och users...
      */
 
     //post
@@ -35,10 +35,26 @@ public class CommentService {
         Opinion opinion = opinionRepository.findById(opinionID).orElseThrow(() -> new NoSuchElementException("Opinion not found."));
         Comment comment = new Comment(UUID.randomUUID(), new Date(), commentDTO.getCommentText(), user, opinion);
         return commentRepository.save(comment);
-
     }
 
     //update
+    public Comment updateComment(User user, CommentDTO commentDTO) throws NoSuchElementException, IllegalAccessException {
+            Comment comment = commentRepository.findById(commentDTO.getCommentID()).orElseThrow(() -> new NoSuchElementException("Opinion not found."));
+            if (comment.getAuthor().getUserID() != user.getUserID()) {
+                throw new IllegalAccessException("You are nor authorized to edit this comment");
+            }
+            comment.setCommentText(commentDTO.getCommentText());
+            return commentRepository.save(comment);
+    }
 
     //delete
+    public void deleteComment(User user, String commentID) throws NoSuchElementException, IllegalAccessException {
+        Comment comment = commentRepository.findById(UUID.fromString(commentID)).orElseThrow(() -> new NoSuchElementException("Opinion not found."));
+        if (comment.getAuthor().getUserID() != user.getUserID()) {
+            throw new IllegalAccessException("You are nor authorized to delete this comment");
+        }
+
+        commentRepository.delete(comment);
+    }
+
 }
