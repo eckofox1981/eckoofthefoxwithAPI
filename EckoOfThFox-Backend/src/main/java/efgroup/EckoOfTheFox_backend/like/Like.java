@@ -27,10 +27,10 @@ public class Like {
     private Date publicationDate;
 
     @ManyToOne
-    private Comment commentLikedID;
+    private Comment commentLiked;
 
     @ManyToOne
-    private Opinion opinionLikedID;
+    private Opinion opinionLiked;
 
     @ManyToOne
     private User user;
