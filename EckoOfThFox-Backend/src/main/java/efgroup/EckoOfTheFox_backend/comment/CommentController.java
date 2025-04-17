@@ -17,7 +17,7 @@ public class CommentController {
     //get
 
     //post
-    @PostMapping("/add-comment")
+    @PostMapping("/post")
     public ResponseEntity<?> commentOpinion(@AuthenticationPrincipal User user,
                                             @PathVariable UUID opinionID,
                                             @RequestBody CommentDTO commentDTO) {
@@ -30,7 +30,7 @@ public class CommentController {
     }
 
     //update
-    @PutMapping("/edit-comment")
+    @PutMapping("/edit")
     public ResponseEntity<?> editComment(@AuthenticationPrincipal User user, @RequestBody CommentDTO commentDTO) {
         try {
             CommentDTO updatedCommentDTO = CommentDTO.fromComment(commentService.updateComment(user, commentDTO));
@@ -43,7 +43,7 @@ public class CommentController {
     }
 
     //delete
-    @DeleteMapping("/delete-mapping")
+    @DeleteMapping("/delete")
     public ResponseEntity<?> deleteComment(@AuthenticationPrincipal User user, @PathVariable String commentID) {
         try {
             commentService.deleteComment(user, commentID);

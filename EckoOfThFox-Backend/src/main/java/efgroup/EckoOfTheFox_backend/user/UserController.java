@@ -16,7 +16,7 @@ public class UserController {
     private final UserService userService;
 
     //register
-    @PostMapping("/register-user")
+    @PostMapping("/register")
     public ResponseEntity<?> registerAccount(@RequestBody UserPasswordDTO userPasswordDTO){
         try {
             User user = userService.createUser(userPasswordDTO);
@@ -47,7 +47,7 @@ public class UserController {
         }
     }
     //update
-
+    @PutMapping("/update-info")
     public ResponseEntity<?> updateUserInfo(@AuthenticationPrincipal User user, UserDTO userDTO) {
         try {
             UserDTO updatedUserDTO = UserDTO.fromUser(userService.updateUser(user, userDTO));
@@ -58,6 +58,7 @@ public class UserController {
     }
 
     //remove
+    @DeleteMapping("/delete")
     public ResponseEntity<?> removeAccount(@AuthenticationPrincipal User user) {
         try {
             String accountName = user.getUsername();

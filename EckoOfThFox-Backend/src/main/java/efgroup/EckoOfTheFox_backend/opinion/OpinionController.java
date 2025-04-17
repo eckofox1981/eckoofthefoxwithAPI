@@ -47,7 +47,7 @@ public class OpinionController {
     }
 
     //post
-    @PostMapping("/post-opinion")
+    @PostMapping("/post")
     public ResponseEntity<?> submitOpinion(@AuthenticationPrincipal User user, @RequestBody OpinionDTO opinionDTO) {
         try {
             OpinionDTO savedOpinionDTO = OpinionDTO.fromOpinion(opinionService.saveOpinion(user, opinionDTO));
@@ -58,7 +58,7 @@ public class OpinionController {
     }
 
     //update
-    @PutMapping("/edit-opinion")
+    @PutMapping("/edit")
     public ResponseEntity<?> updateOpinion(@AuthenticationPrincipal User user, @RequestBody OpinionDTO opinionDTO) {
         try {
             Opinion updatedOpinion = opinionService.updateOpinion(user, opinionDTO);
@@ -71,7 +71,7 @@ public class OpinionController {
     }
 
     //delete
-    @DeleteMapping("/delete-opinion")
+    @DeleteMapping("/delete")
     public ResponseEntity<?> deleteOpinion(@AuthenticationPrincipal User user, @PathVariable UUID opinionID) {
         try {
             opinionService.deleteOpinion(user, opinionID);
