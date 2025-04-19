@@ -34,7 +34,7 @@ public class Comment {
     @ManyToOne
     private Opinion opinion;
 
-    @OneToMany(mappedBy = "commentLikedID", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "commentLiked", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes;
 
     public Comment(UUID commentID, Date publicationDate, String commentText, User author, Opinion opinion) {

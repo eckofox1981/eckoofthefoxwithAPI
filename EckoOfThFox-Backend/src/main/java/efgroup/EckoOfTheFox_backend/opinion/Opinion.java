@@ -48,7 +48,7 @@ public class Opinion {
     @OneToMany(mappedBy = "opinion", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "opinionLikedID", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "opinionLiked", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Like> likes;
 
     public Opinion(UUID opinionID, String title, String opinionText, String imgName, byte[] imgContent, String imgType, User author) {

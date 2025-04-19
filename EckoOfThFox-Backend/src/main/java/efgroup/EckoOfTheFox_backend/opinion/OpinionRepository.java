@@ -9,5 +9,5 @@ import java.util.UUID;
 @Repository
 public interface OpinionRepository extends JpaRepository<Opinion, UUID> {
 
-    Optional<Opinion> findByOpinionTitle(String title);
+    Optional<Opinion> findByTitle(String title);
 }

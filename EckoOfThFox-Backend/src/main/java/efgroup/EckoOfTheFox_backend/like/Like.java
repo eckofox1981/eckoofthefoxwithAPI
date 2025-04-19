@@ -14,7 +14,7 @@ import lombok.Setter;
 import java.util.Date;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "likes") //plural since I can't have the word 'like' in SQL
 @AllArgsConstructor
 @Getter
 @Setter

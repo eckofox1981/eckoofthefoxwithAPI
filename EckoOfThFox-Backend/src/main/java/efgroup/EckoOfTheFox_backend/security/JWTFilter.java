@@ -39,7 +39,7 @@ public class JWTFilter extends OncePerRequestFilter {
             if (potentialOAuth2Auth instanceof OAuth2AuthenticationToken oAuth2AuthenticationToken) {
                 OAuth2User oAuth2User = oAuth2AuthenticationToken.getPrincipal();
 
-                Optional<User> optionalUser = userRepository.findByOpenIDConnectID(oAuth2User.getName());
+                Optional<User> optionalUser = userRepository.findByOpenIdConnect(oAuth2User.getName());
 
                 if (optionalUser.isEmpty()) {
                     response.sendError(401, "User not found. Check OAuth2-token validity");

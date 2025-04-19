@@ -36,7 +36,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         OAuth2AuthenticationToken oAuth2Token = (OAuth2AuthenticationToken) authentication;
         OAuth2User oAuth2User = oAuth2Token.getPrincipal();
 
-        Optional<User> optionalUser = userRepository.findByOpenIDConnectID(oAuth2User.getName());
+        Optional<User> optionalUser = userRepository.findByOpenIdConnect(oAuth2User.getName());
 
         if (optionalUser.isEmpty()) { //if the OpenIDUser exists
             String email = "";
