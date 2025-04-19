@@ -12,10 +12,14 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +33,9 @@ public class SecurityConfig {
                                            JWTService jwtService,
                                            OAuth2SuccessHandler oAuth2SuccessHandler,
                                            UserRepository userRepository) throws Exception {
-        httpSecurity.csrf(AbstractHttpConfigurer::disable)
+        httpSecurity
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests
                         (auth -> auth
                                 .requestMatchers(HttpMethod.PUT, "/user/login").permitAll()
@@ -65,5 +71,28 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
+    }
+
+    /**
+     * sets up the CORS configuration source (through Spring) to allow requests from the 127 http address
+     * a new corsconfiguration is created
+     * only requests from the http are allowed
+     * all methods are permited
+     * and allowed headers allows all header requests
+     * allow credentials allows cookies to be sent
+     *
+     * UrlBasedCorsConfigurationSource applies the rule set above
+     */
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+            corsConfiguration.setAllowedOrigins(Arrays.asList("http://127.0.0.1:5500"));
+            corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+            corsConfiguration.setAllowedHeaders(Arrays.asList("*"));
+            corsConfiguration.setAllowCredentials(true);
+
+            UrlBasedCorsConfigurationSource urlBasedCorsConfigurationSource = new UrlBasedCorsConfigurationSource();
+            urlBasedCorsConfigurationSource.registerCorsConfiguration("/**", corsConfiguration);
+            return urlBasedCorsConfigurationSource;
     }
 }

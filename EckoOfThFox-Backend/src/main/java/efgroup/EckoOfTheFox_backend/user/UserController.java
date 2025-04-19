@@ -1,9 +1,6 @@
 package efgroup.EckoOfTheFox_backend.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -69,18 +66,5 @@ public class UserController {
         }
     }
 
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    public class UserPasswordDTO {
-        private String username;
-        private String email;
-        private String password;
-        private String passwordCheck;
 
-        public UserPasswordDTO (String username, String password) {
-            this.username = username;
-            this.password = password;
-        }
-    }
 }

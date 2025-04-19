@@ -18,7 +18,7 @@ public class UserService implements UserDetailsService {
     private final PasswordConfig passwordConfig;
     private final JWTService jwtService;
 
-    public User createUser(UserController.UserPasswordDTO userPasswordDTO) {
+    public User createUser(UserPasswordDTO userPasswordDTO) {
         if (!samePasswords(userPasswordDTO.getPassword(), userPasswordDTO.getPasswordCheck())) {
             throw new IllegalArgumentException("The passwords do not match");
         }
@@ -28,6 +28,7 @@ public class UserService implements UserDetailsService {
                     "characters and at least one digit.");
         }
 
+        System.out.println(userPasswordDTO);
         User createdUser = new User(UUID.randomUUID(), userPasswordDTO.getUsername(),
                 userPasswordDTO.getEmail(), passwordConfig.passwordEncoder().encode(userPasswordDTO.getPassword()));
 
@@ -35,7 +36,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(createdUser);
     }
 
-    public String login(UserController.UserPasswordDTO userPasswordDTO) throws LoginException {
+    public String login(UserPasswordDTO userPasswordDTO) throws LoginException {
         User user = userRepository.findByUsername(userPasswordDTO.getUsername())
                 .orElseThrow(() -> new LoginException("Incorrect username or password"));
 
