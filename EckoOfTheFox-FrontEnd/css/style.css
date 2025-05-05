@@ -1,0 +1,364 @@
+@import url('https://fonts.googleapis.com/css2?family=Mr+Dafoe&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noticia+Text:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import "tailwindcss";
+
+
+h1 {
+    color: rgb(62, 62, 62);
+    font-size: 2.5rem;
+    font-weight: bold;
+    font-family: "Mr Dafoe", cursive;
+}
+
+h2 {
+    color: rgb(62, 62, 62);
+    font-size: 1.75rem;
+    font-weight:700;
+    text-align: center;
+}
+
+h2:hover {
+    text-decoration: underline;
+}
+
+h3 {
+    color: rgb(62, 62, 62);
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+i {
+    font-size: 1rem;
+}
+
+p {
+    text-indent: 1rem;
+    line-height: 1.25rem;
+}
+
+button {
+    background-color: rgb(255, 104, 0);
+    color: rgb(255,251.05,234.6);
+    width: fit-content;
+    height: 3rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: auto;
+    padding-bottom: auto;
+    border: 1px solid rgb(255,251.05,234.6);
+    border-radius: 0.75rem;
+    text-align: center;
+    font-weight: bold;
+    align-self: flex-end;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: 200ms;
+}
+
+button:hover {
+    background-color: rgb(255,251.05,234.6);
+    color: rgb(255, 104, 0);
+    border: 1px solid rgb(255, 104, 0);
+    text-decoration: underline;
+}
+
+
+
+input {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5;
+    padding-bottom: 0.5rem;
+    border: 1px solid rgb(62, 62, 62);
+    border-radius: 0.75rem;
+}
+
+#hamburger-menu {
+    align-content: center;
+    text-align: right;
+    padding-right: 0.5rem;
+    a {
+        text-decoration: none;
+        color: rgb(62, 62, 62);
+    }
+}
+
+.hidden-nav-bar {
+        display: none;
+}
+
+.nav-bar {
+    display: block;
+    position: absolute;
+    right: 1px;
+    transform: translate(0, 0);
+    background-color: var(--color-amber-50);
+    border: 1px solid rgb(62, 62, 62);
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    padding: 0.5rem;
+    li {
+        display: block;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    #hamburger-menu {
+        svg {
+            visibility: hidden;
+        }
+    }
+    header:hover {
+        #hamburger-menu {
+            ul {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-around;
+                gap: 2rem;
+                position: absolute;
+                left: 50%;
+                transform: translate(-50%, 1.5rem);
+                background-color: var(--color-amber-50);
+                border: 1px solid rgb(62, 62, 62);
+                border-radius: 0.5rem;
+                padding: 0.5rem;
+                min-width: fit-content;
+                max-width: fit-content;
+            }
+        }
+    }
+}
+
+.sidebar {
+    position: fixed;
+    top: 10rem;
+    right: 0rem;
+    justify-items: end;
+    z-index: 49;
+    color: var(--color-amber-50);
+    transition: 1s;
+    div {
+        background-color: rgba(62, 62, 62, 0.95);
+        display: none;
+        max-height: 80vh;
+        border-radius: 1rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+        overflow-y: scroll;
+    }
+}
+
+    
+
+.sidebar h1 {
+    color: var(--color-amber-50);
+    font-size: 1.5rem;
+}
+
+.sidebar:hover {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 1rem;
+    div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.sidebar li:hover {
+    background-color: var(--color-amber-50);
+    color: rgb(62, 62, 62);
+}
+
+.author {
+    font-family: "Mr Dafoe", cursive;
+    font-size: 1.5rem;
+    align-self: flex-end;
+    margin-left: auto;
+    margin-right: 0;
+    padding-right: 1rem;
+}
+
+.date-and-title {
+    width: 100%;
+    margin-bottom: 2px;
+    div {
+        margin-left: 0.5rem;
+        margin-right: auto;
+        margin-bottom: 0;
+        font-size: small;
+        font-style: italic;
+    }
+    h2 {
+        line-height: 1.6rem;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 0;
+        padding: 0;
+    }
+}
+
+
+.flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 6rem;
+    perspective: 1000px;
+    border: 1px solid rgb(62, 62, 62);
+  }
+  
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 1s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  }
+  
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
+  
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+  
+  .flip-card-front {
+    background-color: var(--color-amber-50);
+    color: rgb(62, 62, 62);
+    align-content: center;
+    line-height: 1.5rem;
+  }
+  
+  .flip-card-back {
+    background-color: rgb(62, 62, 62);
+    color: var(--color-amber-50);
+    transform: rotateY(180deg);
+    align-content: center;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+footer {
+    background-color: rgb(62, 62, 62);
+    color: var(--color-amber-50);
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-content: center;
+    a {
+        text-decoration: none;
+        color: var(--color-amber-50);
+    }
+    h2 {
+        color: var(--color-amber-50);
+    }
+
+}
+
+footer > div {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+#logo-social-media {
+    max-width: 12rem;
+    padding: 1rem;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    gap: 0;
+
+}
+
+@media only screen and (max-width: 640px) {
+    footer ul {
+        display: none;
+    }
+    footer > div {
+        flex-direction: column;
+        gap: 0;
+        h2 {
+            font-size: 1rem;
+        }
+    }
+
+    #logo-social-media {
+        max-width: 6rem;
+        margin-left: 0.5rem;
+        i {
+            font-size: x-small;
+        }
+    }
+    
+}
+
+@media only screen and (max-width: 1024px) {
+    .sidebar {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1291px) {
+    .sidebar {
+        top: 11.5rem;
+    }
+}
+
+#toast {
+    visibility: hidden;
+    min-width: 20rem; 
+    max-width: fit-content;
+    margin-left: -125px;
+    background-color: rgb(255, 104, 0); 
+    color: white;
+    text-align: center;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    position: fixed;
+    z-index: 100;
+    left: 50%; 
+    top: 10%;
+}
+
+#toast.show {
+  visibility: visible;
+  -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+  animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+@-webkit-keyframes fadein {
+  from {top: 0; opacity: 0;} 
+  to {top: 10%; opacity: 1;}
+}
+
+@keyframes fadein {
+  from {top: 0; opacity: 0;} 
+  to {top: 10%; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+  from {top: 10%; opacity: 1;} 
+  to {top: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+  from {top: 10%; opacity: 1;} 
+  to {top: 0; opacity: 0;}
+}

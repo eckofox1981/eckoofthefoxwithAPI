@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Ecko Of The Fox - unreal news</title>
+    <link rel="icon" type="image/png" href="/logos/EoF logo.png" />
+    <link rel="stylesheet" href="/css/styleoutput.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/non-index-style.css" />
+    <link rel="stylesheet" href="/css/opinion.css" />
+    <script src="./javascript/main.js" type="module"></script>
+    <script src="./javascript/login.js" type="module"></script>
+  </head>
+  <body
+    class="bg-amber-50 text-justify min-h-screen flex flex-col"
+    style="font-family: Noticia; font-size: 1.25rem; color: rgb(39, 39, 39)"
+  >
+    <header
+      class="h-16 w-full py-0.5 flex justify-between content-center border-b fixed top-0 z-50 bg-amber-50 lg:h-28"
+    >
+      <div
+        class="max-h-16 max-w-[85%] self-center flex flex-row justify-center content-center mx-auto lg:h-28"
+      >
+        <img
+          class="hidden sm:block max-w-1/5 max-h-14 lg:max-h-28"
+          src="/logos/EoF logo BW.png"
+          alt="ecko of the fox logo"
+        />
+        <img
+          class="max-w-3/5 max-h-14 lg:max-h-28"
+          src="/logos/EoF title BW.png"
+          alt="ecko of the fox title"
+        />
+      </div>
+      <div id="hamburger-menu">
+        <svg
+          width="2rem"
+          height="2rem"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            fill-rule="evenodd"
+            clip-rule="evenodd"
+            d="M4 5C3.44772 5 3 5.44772 3 6C3 6.55228 3.44772 7 4 7H20C20.5523 7 21 6.55228 21 6C21 5.44772 20.5523 5 20 5H4ZM7 12C7 11.4477 7.44772 11 8 11H20C20.5523 11 21 11.4477 21 12C21 12.5523 20.5523 13 20 13H8C7.44772 13 7 12.5523 7 12ZM13 18C13 17.4477 13.4477 17 14 17H20C20.5523 17 21 17.4477 21 18C21 18.5523 20.5523 19 20 19H14C13.4477 19 13 18.5523 13 18Z"
+            fill="rgb(62,62,62)"
+          />
+        </svg>
+        <ul id="navBar" class="hidden-nav-bar">
+          <li><a href="/index.html">Home</a></li>
+          <li><a href="/international.html">International</a></li>
+          <li><a href="/domestic.html">Domestic</a></li>
+          <li><a href="/economy.html">Economy</a></li>
+          <li><a href="/tech.html">Technology</a></li>
+          <li><a href="/entertainment.html">Entertainment</a></li>
+          <li><a href="/opinions.html">Opinions</a></li>
+          <li>
+            <a href="/login.html"
+              ><button class="loginBtnHeader"
+                style="
+                  padding-top: 0;
+                  padding-bottom: 0;
+                  margin-top: 0;
+                  margin-bottom: 0;
+                  height: fit-content;
+                "
+              >
+                Login
+              </button></a
+            >
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <main
+      id = "login-main"
+      class="mt-18 max-w-[800px] flex flex-col gap-4 text-center px-2 mx-0.5 lg:mt-28 lg:mx-auto lg:border-0 flex-grow bg"
+    >
+      <div class="loginOrRegister" id="loginDiv">
+        <h1 class="self-center text-center mb-8">Login</h1>
+        <div>
+          <label for="usernameInput">Username:</label>
+          <input type="text" id="usernameInput" />
+        </div>
+        <div>
+          <label for="passwordInput">Password:</label>
+          <input type="password" id="passwordInput" />
+        </div>
+        <div class="self-end flex flex-col gap-0.5 flex-wrap">
+          <button id="loginButton">Login</button>
+          <button id="googleLoginButton">Login with Google</button>
+          <button id="openRegisterButton" class="secondaryButton">Register</button>
+        </div>
+      </div>
+    </main>
+    <!-- TODO: hide-->
+    <section
+      class="mt-18 max-w-[800px] flex flex-col content-center text-center px-2 mx-0.5 lg:mt-28 lg:mx-auto lg:border-0 flex-grow"
+    >
+      <div class="loginOrRegister" id="registerDiv">
+        <h1 class="self-center text-center mb-8">Register</h1>
+
+        <div class="mb-2">
+          <label for="registerUsernameInput">Username:</label>
+          <input type="text" id="registerUsernameInput" />
+        </div>
+        <div class="mb-2">
+          <label for="emailInput">Email:</label>
+          <input type="text" id="registerEmailInput" />
+        </div>
+        <div class="mb-2">
+          <label for="passwordInput">Password:</label>
+          <input type="password" id="registerPasswordInput" />
+        </div>
+        <div style="display: none" id="warningPassType">
+          Password not eligible.
+          Requirements:  
+          <ol>
+          <li>
+          </li>5 letters minimum,</li> <li>lower and uppercase characters and</li> <li>at
+          least one digit.</li></ol>
+          </div>
+        <div class="mb-2">
+          <label for="passwordInput">Confirm password:</label>
+          <input type="password" id="registerPasswordConfirmInput" />
+        </div>
+        <p style="display: none" id="warningPassMatch">
+          The passwords do not match
+        </p>
+        <div class="self-end flex flex-col gap-0.5 flex-wrap">
+          <button id="registerButton">Register</button>
+        </div>
+      </div>
+    </section>
+    <!-- FOOTER++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+    <footer class="mt-auto mb-0 left-0">
+      <div id="logo-social-media">
+        <a class="self-center flex flex-col items-center" href="index.html"
+          ><img
+            class="mx-auto"
+            src="logos/EoF logo BW inverted.png"
+            alt="ecko of the fox logo"
+          />
+          <i>© eckofox 2025</i>
+        </a>
+        <div class="flex justify-between">
+          <a href="https://www.facebook.com">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="2rem"
+              viewBox="-204.79995 -341.33325 1774.9329 2047.9995"
+            >
+              <path
+                d="M1365.333 682.667C1365.333 305.64 1059.693 0 682.667 0 305.64 0 0 305.64 0 682.667c0 340.738 249.641 623.16 576 674.373V880H402.667V682.667H576v-150.4c0-171.094 101.917-265.6 257.853-265.6 74.69 0 152.814 13.333 152.814 13.333v168h-86.083c-84.804 0-111.25 52.623-111.25 106.61v128.057h189.333L948.4 880H789.333v477.04c326.359-51.213 576-333.635 576-674.373"
+                fill="rgb(255, 251, 235)"
+              />
+              <path
+                d="M948.4 880l30.267-197.333H789.333V554.609C789.333 500.623 815.78 448 900.584 448h86.083V280s-78.124-13.333-152.814-13.333c-155.936 0-257.853 94.506-257.853 265.6v150.4H402.667V880H576v477.04a687.805 687.805 0 00106.667 8.293c36.288 0 71.91-2.84 106.666-8.293V880H948.4"
+                fill="none"
+              />
+            </svg>
+          </a>
+          <a href="https://www.instagram.com">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              xmlns:xlink="http://www.w3.org/1999/xlink"
+              height="2rem"
+              viewBox="-19.5036 -32.49725 169.0312 194.9835"
+            >
+              <path
+                d="M65.033 0C37.891 0 29.953.028 28.41.156c-5.57.463-9.036 1.34-12.812 3.22-2.91 1.445-5.205 3.12-7.47 5.468-4.125 4.282-6.625 9.55-7.53 15.812-.44 3.04-.568 3.66-.594 19.188-.01 5.176 0 11.988 0 21.125 0 27.12.03 35.05.16 36.59.45 5.42 1.3 8.83 3.1 12.56 3.44 7.14 10.01 12.5 17.75 14.5 2.68.69 5.64 1.07 9.44 1.25 1.61.07 18.02.12 34.44.12 16.42 0 32.84-.02 34.41-.1 4.4-.207 6.955-.55 9.78-1.28a27.22 27.22 0 0017.75-14.53c1.765-3.64 2.66-7.18 3.065-12.317.088-1.12.125-18.977.125-36.81 0-17.836-.04-35.66-.128-36.78-.41-5.22-1.305-8.73-3.127-12.44-1.495-3.037-3.155-5.305-5.565-7.624-4.3-4.108-9.56-6.608-15.829-7.512C102.338.157 101.733.027 86.193 0z"
+                fill="rgb(255, 251, 235)"
+              />
+              <path
+                d="M65.033 0C37.891 0 29.953.028 28.41.156c-5.57.463-9.036 1.34-12.812 3.22-2.91 1.445-5.205 3.12-7.47 5.468-4.125 4.282-6.625 9.55-7.53 15.812-.44 3.04-.568 3.66-.594 19.188-.01 5.176 0 11.988 0 21.125 0 27.12.03 35.05.16 36.59.45 5.42 1.3 8.83 3.1 12.56 3.44 7.14 10.01 12.5 17.75 14.5 2.68.69 5.64 1.07 9.44 1.25 1.61.07 18.02.12 34.44.12 16.42 0 32.84-.02 34.41-.1 4.4-.207 6.955-.55 9.78-1.28a27.22 27.22 0 0017.75-14.53c1.765-3.64 2.66-7.18 3.065-12.317.088-1.12.125-18.977.125-36.81 0-17.836-.04-35.66-.128-36.78-.41-5.22-1.305-8.73-3.127-12.44-1.495-3.037-3.155-5.305-5.565-7.624-4.3-4.108-9.56-6.608-15.829-7.512C102.338.157 101.733.027 86.193 0z"
+                fill="rgb(255, 251, 235)"
+              />
+              <path
+                d="M65.003 17c-13.036 0-14.672.057-19.792.29-5.11.234-8.598 1.043-11.65 2.23-3.157 1.226-5.835 2.866-8.503 5.535-2.67 2.668-4.31 5.346-5.54 8.502-1.19 3.053-2 6.542-2.23 11.65C17.06 50.327 17 51.964 17 65s.058 14.667.29 19.787c.235 5.11 1.044 8.598 2.23 11.65 1.227 3.157 2.867 5.835 5.536 8.503 2.667 2.67 5.345 4.314 8.5 5.54 3.054 1.187 6.543 1.996 11.652 2.23 5.12.233 6.755.29 19.79.29 13.037 0 14.668-.057 19.788-.29 5.11-.234 8.602-1.043 11.656-2.23 3.156-1.226 5.83-2.87 8.497-5.54 2.67-2.668 4.31-5.346 5.54-8.502 1.18-3.053 1.99-6.542 2.23-11.65.23-5.12.29-6.752.29-19.788 0-13.036-.06-14.672-.29-19.792-.24-5.11-1.05-8.598-2.23-11.65-1.23-3.157-2.87-5.835-5.54-8.503-2.67-2.67-5.34-4.31-8.5-5.535-3.06-1.187-6.55-1.996-11.66-2.23-5.12-.233-6.75-.29-19.79-.29zm-4.306 8.65c1.278-.002 2.704 0 4.306 0 12.816 0 14.335.046 19.396.276 4.68.214 7.22.996 8.912 1.653 2.24.87 3.837 1.91 5.516 3.59 1.68 1.68 2.72 3.28 3.592 5.52.657 1.69 1.44 4.23 1.653 8.91.23 5.06.28 6.58.28 19.39s-.05 14.33-.28 19.39c-.214 4.68-.996 7.22-1.653 8.91-.87 2.24-1.912 3.835-3.592 5.514-1.68 1.68-3.275 2.72-5.516 3.59-1.69.66-4.232 1.44-8.912 1.654-5.06.23-6.58.28-19.396.28-12.817 0-14.336-.05-19.396-.28-4.68-.216-7.22-.998-8.913-1.655-2.24-.87-3.84-1.91-5.52-3.59-1.68-1.68-2.72-3.276-3.592-5.517-.657-1.69-1.44-4.23-1.653-8.91-.23-5.06-.276-6.58-.276-19.398s.046-14.33.276-19.39c.214-4.68.996-7.22 1.653-8.912.87-2.24 1.912-3.84 3.592-5.52 1.68-1.68 3.28-2.72 5.52-3.592 1.692-.66 4.233-1.44 8.913-1.655 4.428-.2 6.144-.26 15.09-.27zm29.928 7.97a5.76 5.76 0 105.76 5.758c0-3.18-2.58-5.76-5.76-5.76zm-25.622 6.73c-13.613 0-24.65 11.037-24.65 24.65 0 13.613 11.037 24.645 24.65 24.645C78.616 89.645 89.65 78.613 89.65 65S78.615 40.35 65.002 40.35zm0 8.65c8.836 0 16 7.163 16 16 0 8.836-7.164 16-16 16-8.837 0-16-7.164-16-16 0-8.837 7.163-16 16-16z"
+                fill="rgb(62,62,62)"
+              />
+            </svg>
+          </a>
+          <a href="https://www.twitter.com">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="2rem"
+              viewBox="-44.7006 -60.54775 387.4052 363.2865"
+            >
+              <path
+                fill="rgb(255, 251, 235)"
+                d="M93.719 242.19c112.46 0 173.96-93.168 173.96-173.96 0-2.646-.054-5.28-.173-7.903a124.338 124.338 0 0030.498-31.66c-10.955 4.87-22.744 8.148-35.11 9.626 12.622-7.57 22.313-19.543 26.885-33.817a122.62 122.62 0 01-38.824 14.841C239.798 7.433 223.915 0 206.326 0c-33.764 0-61.144 27.381-61.144 61.132 0 4.798.537 9.465 1.586 13.941-50.815-2.557-95.874-26.886-126.03-63.88a60.977 60.977 0 00-8.279 30.73c0 21.212 10.794 39.938 27.208 50.893a60.685 60.685 0 01-27.69-7.647c-.009.257-.009.507-.009.781 0 29.61 21.075 54.332 49.051 59.934a61.218 61.218 0 01-16.122 2.152 60.84 60.84 0 01-11.491-1.103c7.784 24.293 30.355 41.971 57.115 42.465-20.926 16.402-47.287 26.171-75.937 26.171-4.929 0-9.798-.28-14.584-.846 27.059 17.344 59.189 27.464 93.722 27.464"
+              />
+            </svg>
+          </a>
+          <a href="https://www.discord.com">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="2rem"
+              version="1.1"
+              id="Layer_1"
+              viewBox="-26.25 -50 227.5 300"
+            >
+              <style id="style114">
+                .st0 {
+                  fill: rgb(255, 251, 235);
+                }
+              </style>
+              <path
+                id="path116"
+                d="M69.4 83.9c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1.1-6.1-4.5-11.1-10.2-11.1zm36.5 0c-5.7 0-10.2 5-10.2 11.1s4.6 11.1 10.2 11.1c5.7 0 10.2-5 10.2-11.1s-4.5-11.1-10.2-11.1z"
+                class="st0"
+              />
+              <path
+                id="path118"
+                d="M154.5 0h-134C9.2 0 0 9.2 0 20.6v135.2c0 11.4 9.2 20.6 20.5 20.6h113.4l-5.3-18.5 12.8 11.9 12.1 11.2 21.5 19V20.6C175 9.2 165.8 0 154.5 0zm-38.6 130.6s-3.6-4.3-6.6-8.1c13.1-3.7 18.1-11.9 18.1-11.9-4.1 2.7-8 4.6-11.5 5.9-5 2.1-9.8 3.5-14.5 4.3-9.6 1.8-18.4 1.3-25.9-.1-5.7-1.1-10.6-2.7-14.7-4.3-2.3-.9-4.8-2-7.3-3.4-.3-.2-.6-.3-.9-.5-.2-.1-.3-.2-.4-.3-1.8-1-2.8-1.7-2.8-1.7s4.8 8 17.5 11.8c-3 3.8-6.7 8.3-6.7 8.3-22.1-.7-30.5-15.2-30.5-15.2 0-32.2 14.4-58.3 14.4-58.3 14.4-10.8 28.1-10.5 28.1-10.5l1 1.2c-18 5.2-26.3 13.1-26.3 13.1s2.2-1.2 5.9-2.9c10.7-4.7 19.2-6 22.7-6.3.6-.1 1.1-.2 1.7-.2 6.1-.8 13-1 20.2-.2 9.5 1.1 19.7 3.9 30.1 9.6 0 0-7.9-7.5-24.9-12.7l1.4-1.6s13.7-.3 28.1 10.5c0 0 14.4 26.1 14.4 58.3 0 0-8.5 14.5-30.6 15.2z"
+                class="st0"
+              />
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-list-appear">
+          <h2><a href="#">About us</a></h2>
+          <ul>
+            <li>Our History</li>
+            <li>The Team</li>
+            <li>Contact Us</li>
+          </ul>
+        </div>
+        <div>
+          <h2><a href="#">Policies</a></h2>
+          <ul>
+            <li>Our Values</li>
+            <li>Artificial Intelligence</li>
+            <li>Alleged Slavery In Our Offices</li>
+          </ul>
+        </div>
+        <div>
+          <h2><a href="#">Navigation</a></h2>
+          <ul>
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/international.html">International</a></li>
+            <li><a href="/domestic.html">Domestic</a></li>
+            <li><a href="/economy.html">Economy</a></li>
+            <li><a href="/tech.html">Technology</a></li>
+            <li><a href="/entertainment.html">Entertainment</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+    <div id="toast"></div>
+  </body>
+</html>
