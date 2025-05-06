@@ -19,20 +19,18 @@ const googleLoginBtn = document.getElementById("googleLoginButton");
 const openRegisterBtn = document.getElementById("openRegisterButton");
 const registerBtn = document.getElementById("registerButton");
 
-let user;
-
 let registerDivIsVisible = false;
 
 let passwordsAreCorrect = false;
 
 checkLoginStatus();
 
-async function checkLoginStatus() {
-        let status = await isLoggedin();
-        console.log(status);
-        if (await status) {
-                console.log("shows info");
-                showAccount();
+function checkLoginStatus() {
+        let status = isLoggedin();
+        if (status) {
+                let user = localStorage.getItem("activeUser");
+                user = JSON.parse(user);
+                showAccount(user);
         } else {
           console.log("hmmm.... :/ try loging in(?)");
         }
@@ -54,41 +52,31 @@ registerPasswordConfirmInput.addEventListener("input", () => {checkPasswords(reg
 
 
 function login(username, password) {
+        let localUser;
+        let localUsers = localStorage.getItem("localUsers");
+        
+        localUsers = JSON.parse(localUsers);
 
-        let message = "";
-
-        let userPasswordDTO = JSON.stringify ({
-                username: username,
-                password: password,
-        });
-
-        fetch("http://localhost:8080/user/login", {
-                method: 'PUT',
-                headers: { 'Content-type': 'application/json' },
-                body: userPasswordDTO
-        })
-                .then(async response => {
-                        if (!response.ok) {
-                          message = "Error: " + response.status + " - " + await response.text();
-                          throw new Error(message);
+        if (localUsers === undefined || localUsers === null) {
+                showToast("You could not login. Check username and password.");
+        } else {
+                for (let user of localUsers) {
+                                                
+                        if (user.username === username && user.password === password) {
+                                localUser = JSON.stringify(user);
+                                localStorage.setItem("activeUser", localUser);
+                                localUser = user;
                         }
-                        return response.text();
-                      })
-                      .then(data => {
-                        console.log("running");
-                        
-                        localStorage.setItem("token", data);
-                        localStorage.setItem("username", username);
-                        console.log(localStorage.getItem("token") + " " + localStorage.getItem("username"));
-                        isLoggedin();
-                        showToast("You are logged in");
-                        showAccount();
-                      })
-                      .catch(error => {
-                        console.error('Error:', message);
-                        messageP.textContent = message;
-                        loginDiv.append(messageP);
-                      });
+
+                }
+        }
+        if (localStorage.getItem("activeUser") === null || localStorage.getItem("activeUser") === undefined) {
+                showToast("You could not login. Check username and password.");
+        } else {
+                showAccount(localUser);
+        }
+
+
 
 }
 
@@ -121,49 +109,20 @@ function register(username, email, password, confirmation) {
                 
                 registerDiv.append(messageP);
         } else {
+                let newUser = new User (
+                        username,
+                        email,
+                        password,
+                );
                 
-
-                let userPasswordDTO = JSON.stringify ({
-                        username: username,
-                        email: email,
-                        password: password,
-                        passwordCheck: confirmation,
-                });
-
-                fetch("http://localhost:8080/user/register", {
-                        method: 'POST',
-                        headers: { 'Content-type': 'application/json' },
-                        body: userPasswordDTO})
-                        .then(async response => {
-                                if (!response.ok) {
-                                  message = "Error: " + response.status + " - " + await response.text();
-                                  messageP.style.borderRadius = "0.5rem";
-                                  console.log(message);
-                                }
-                                return response.json();
-                              })
-                              .then(data => {
-                                message = "User: " + data.username + " created successfully. <br/>. You can now login.";
-                              })
-                              .catch(error => {
-                                console.error('Error:', error);
-                              })
-                              .then(() => {
-                                messageP.innerHTML = message;
-                                registerDiv.append(messageP);
-                              });
+                saveUserToLocaleStorage(newUser);
+                showToast(`${newUser.username} - account has been save. You can now login.`);
         }
         
 }
 
 function showRegister() {
-        if (registerDivIsVisible) {
-                registerDiv.style = "display: none;";
-                registerDivIsVisible = false;
-        } else {
-                registerDiv.style = "display: flex;";
-                registerDivIsVisible = true;
-        }
+        registerDiv.classList.toggle("hidden");
 }
 
 
@@ -201,7 +160,7 @@ function checkPasswords (password, confirmation) {
         }
 }
 
-async function showAccount() {
+function showAccount(user) {
         loginDiv.remove();
         registerDiv.remove();
 
@@ -211,124 +170,73 @@ async function showAccount() {
         const welcomeDiv = document.createElement("div");
         const welcomeH1 = document.createElement("h1");
         const usernameH2 = document.createElement("h2");
-        const userIDi = document.createElement("i");
-        const emailForm = document.createElement("form");
-        const emailInput = document.createElement("input");
-        const emailLabel = document.createElement("label");
-        const updateBtn = document.createElement("button");
+        const emailH3 = document.createElement("h3");
         const logoutBtn = document.createElement("button");
         const deleteBtn = document.createElement("button");
 
-        updateBtn.textContent = "Update User Info";
         logoutBtn.textContent = "Logout"
         deleteBtn.textContent = "Delete Account";
         welcomeH1.textContent = "Welcome ";
 
-
         accountDiv.style = ("display: flex; flex-direction: column; gap: 1rem;");
         welcomeDiv.style = ("display: flex, flex-direction: row; gap: 0.5rem;");
-        userIDi.style = ("margin-top: -1rem");
         
         logoutBtn.className = "secondaryButton";
 
         deleteBtn.className = "dangerousBtn";
         deleteBtn.style = ("margin-top: 5rem;");
 
-        emailLabel.setAttribute("for", "userEmail");
-        emailInput.setAttribute("id", "userEmail");
-
-        updateBtn.addEventListener('click', () => {updateUser(emailInput)});
         logoutBtn.addEventListener('click', logout);
-        updateBtn.addEventListener('click', () => {console.log("deleteBtn");
-       })
+        deleteBtn.addEventListener('click', () => deleteAccount(user));
 
         mainElement.appendChild(accountDiv);
-        accountDiv.append(welcomeDiv, userIDi, emailForm, updateBtn, logoutBtn, deleteBtn);
+        accountDiv.append(welcomeDiv, emailH3, logoutBtn, deleteBtn);
         welcomeDiv.append(welcomeH1, usernameH2);
-        emailForm.append(emailLabel, emailInput);
 
-        fetch("http://localhost:8080/user/info", {
-                method: 'GET',
-                headers: { 
-                        'Authorization': "Bearer " + localStorage.getItem("token")
-                }
-        })
-                .then(async response => {
-                        if (!response.ok) {
-                                
-                                message = "Error: " + response.status + " - " + await response.text();
-                                throw new Error(message);
-                          
-                        }
-                        return response.json();
-                      })
-                      .then(data => {
-                                user = new User(data.userID, data.username, data.email, data.role, data.connection, data.opinionIDs, data.commentedOpinionsIds, data.likedOpinionsIDs);
-                                console.log(user);
-                                usernameH2.textContent = user.username;
-                                userIDi.textContent = user.userID;
-                                emailInput.value = user.email;
-                        })
-                      .catch(error => {
-                                console.error("Fetch Error: ", error.message);
-                                localStorage.removeItem("token");
-                                localStorage.removeItem("username");
-                      });
+        usernameH2.textContent = user.username;
+        emailH3.textContent = user.email;
 
 }
 
 function logout() {
-        localStorage.removeItem("token");
-        localStorage.removeItem("username");
+        localStorage.removeItem("activeUser");
         window.location.href= "./login.html";
 }
 
-/*
-TODO FIX
- */
-function updateUser (emailInput) {
-        const footers = document.getElementsByTagName("footer");
-        let message;
-        console.log(user);
-        user.email = emailInput.value;
-        console.log(user);
-        fetch ('http:localhost:8080/user/update-info', {
-                method: 'PUT',
-                headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem("token"),
-                        'Content-type': 'Application/json'
-                },
-                body: JSON.stringify({
-                        "userID": user.userID,
-                        "username": user.username,
-                        "email": user.email,
-                        "role": user.role,
-                        "connection": user.connection,
-                        "opinionIDs": user.opinionIDs,
-                        "commentedOpinionsIds" : user.commentedOpinionsIds,
-                        "likesMade": user.likesMade
-                })
-        })
-                .then(async response => {
-                        if (!response.ok) {
-                                message = "Error:" + response.status + " - " + await response.text();
-                                messageP.textContent = message;
-                                messageP.style = "margin-bottom: 1rem; text-align: center; color: white; background-color: rgb(255, 104, 0); border-radius: 0.5rem; "
-                                document.body.insertBefore(messageP, footers[0]);
-                                throw new Error(message);
-                        }
-                        return response.json();
-                })
-                .then(data => {
-                        user = new User (data.userID, data.username, data.email, data.connection);
-                        console.log(user);
-                        usernameH2.textContent = user.username;
-                        userIDp.textContent = user.userID;
-                        emailInput.value = user.email;
-                })
-              .catch(error => {
-                        console.error("Fetch Error: ", error.message);
-                        localStorage.removeItem("token");
-              });
+function saveUserToLocaleStorage(user) {
+        let userList = [];
+        
+        console.log();
+        
+        if (localStorage.getItem("localUsers") === null) {
+                userList.push(user);
+                const toSave = JSON.stringify(userList);
+                localStorage.setItem("localUsers", toSave);
+        } else {
+                userList = JSON.parse(localStorage.getItem("localUsers"));
+                userList.push(user);
+                const toSave = JSON.stringify(userList);
+                localStorage.setItem("localUsers", toSave);
+        }
+}
 
+function deleteAccount(user) {
+        console.log(user);
+        
+        if (confirm("Are you sure you want to delete your account?")) {
+                let localUsers = localStorage.getItem("localUsers");
+                console.log(localUsers); //list
+                localUsers = JSON.parse(localUsers);
+                for (let i = 0; i < localUsers.length; i++) {
+                        if (localUsers[i].username === user.username) {
+                                localUsers.splice(i, 1);
+                                break
+                        }
+                }
+                console.log(localUsers); //list
+                localUsers = JSON.stringify(localUsers);
+                localStorage.setItem("localUsers", localUsers);
+                logout();                
+        }
+        
 }

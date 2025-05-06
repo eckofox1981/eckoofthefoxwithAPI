@@ -91,9 +91,9 @@
           <input type="password" id="passwordInput" placeholder="enter password" autocomplete="current-password"/>
         </div>
         <div class="self-end flex flex-col gap-0.5 flex-wrap">
-          <button id="loginButton">Login</button>
+          <button id="loginButton" type="button">Login</button>
           <button id="googleLoginButton">Login with Google</button>
-          <button id="openRegisterButton" class="secondaryButton">Register</button>
+          <button id="openRegisterButton" class="secondaryButton" type="button">Register</button> <!-- add type to prevent page from reloading (inside a form)-->
         </div>
       </form>
     </main>
@@ -101,7 +101,7 @@
     <section
       class="mt-18 max-w-[800px] flex flex-col content-center text-center px-2 mx-0.5 lg:mt-28 lg:mx-auto lg:border-0 flex-grow"
     >
-      <form class="loginOrRegister" id="registerDiv">
+      <form class="loginOrRegister hidden" id="registerDiv">
         <h1 class="self-center text-center mb-8">Register</h1>
 
         <div class="mb-2">
@@ -113,7 +113,7 @@
           <input type="text" id="registerEmailInput" autocomplete="email"/>
         </div>
         <div class="mb-2">
-          <label for="passwordInput">Password:</label>
+          <label for="registerPasswordInput">Password:</label>
           <input type="password" id="registerPasswordInput" autocomplete="new-password"/>
         </div>
         <div style="display: none" id="warningPassType">
@@ -125,14 +125,14 @@
           least one digit.</li></ol>
           </div>
         <div class="mb-2">
-          <label for="passwordInput">Confirm password:</label>
+          <label for="registerPasswordConfirmInput">Confirm password:</label>
           <input type="password" id="registerPasswordConfirmInput" autocomplete="new-password"/>
         </div>
         <p style="display: none" id="warningPassMatch">
           The passwords do not match
         </p>
         <div class="self-end flex flex-col gap-0.5 flex-wrap">
-          <button id="registerButton">Register</button>
+          <button type="button" id="registerButton">Register</button>
         </div>
       </form>
     </section>

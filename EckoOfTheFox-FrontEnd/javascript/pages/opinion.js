@@ -1,5 +1,5 @@
 import {Opinion} from "../objects/opinionMaker.js";
-import { User, showToast } from "../pages/main.js";
+import { User, isLoggedin, showToast } from "../pages/main.js";
 
 const mainElement = document.getElementById("opinion-main");
 const pageTitle = document.getElementById("opinionPageTitle");
@@ -10,43 +10,29 @@ postOpinionBtn.addEventListener('click', showOpinionForm);
 
 gatherOpinions();
 
-async function gatherOpinions() {
+function gatherOpinions() {
         //try/catch to ensure return?
         let message;
         let listOfOpinions = [];
-        try {
-                const response = await  fetch("http://localhost:8080/opinion", {
-                        method: "GET",
-                });
-                if (!response.ok) {
-                        message = "Error: " + response.status + " - " + response.text;
-                        showToast(message);
-                        throw new Error(message);
-                }
-                return response.json()
-                .then(response => {
-                const listOfOpinions = response.map(opinion => new Opinion(opinion.opinionID, opinion.publicationDate, opinion.title, opinion.opinionText, opinion.author));
-                        
-                        for (let i = listOfOpinions.length-1; i >= 0; i--) {
-                               mainElement.append(listOfOpinions[i].publishOpinion());
-                        }
-                })
-        } catch(error) {
-                showToast(error.message);
+        if (localStorage.getItem("opinions").length < 1 || localStorage.getItem("opinions") === undefined) {
+                const message = document.createElement("h2");
+                
+                message.textContent = "No opinions on record. Make your voice heard!"
+                
+                mainElement.appendChild(message);
         }
         
 }
 
 
 function showOpinionForm() {
-        //TODO uncomment
-        /* if (!authorizationToken) {
-                window.location.href = "./login.html";
-        } */
+        if (isLoggedin()) {
+                const user = JSON.parse(localStorage.getItem("activeUser"));
+                makeOpinionFields(user.username);
+                
+        } else {
 
-                makeOpinionFields(localStorage.getItem("username"));
-
-                //todo remeber to add user to authorName element
+        }
         
 }
 

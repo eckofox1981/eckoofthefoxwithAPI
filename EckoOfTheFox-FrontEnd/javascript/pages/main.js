@@ -1,11 +1,8 @@
 export class User {
-        constructor(userID, username, email, role, connection, opinionIDs, commentedopinionIDs, likesMade) {
-                this.userID = userID;
+        constructor(username, email, password, opinionIDs, commentedopinionIDs, likesMade) {
                 this.username = username;
                 this.email = email;
-                this.role = role;
-                this.connection = connection;
-                this.opinionIDs = opinionIDs;
+                this.password = password;
                 this.commentedopinionIDs = commentedopinionIDs;
                 this.likesMade = likesMade;
         }
@@ -24,35 +21,15 @@ const loginBtn = document.getElementsByClassName("loginBtnHeader");
 
 isLoggedin();
 
-export async function isLoggedin () { 
-        /* different fetch as I need the return to layout the login/userinfo page 
-        the whole fetch is awaited and the try/catch ensures a proper boolean-return*/
-        try {                
-        const response = await fetch("http://localhost:8080/user/info", {
-                method: 'GET',
-                headers: { 
-                        'Authorization': "Bearer " + localStorage.getItem("token")
-                        }
-                });
-
-                if (!response.ok) {
-                        console.log("islogged false");
-                        loginBtn[0].textContent = "Login";
-                        return false;
-                }
-
-                console.log("islogged true");
-                loginBtn[0].textContent = "Profile";
-                return true;
-        
-
-        } catch(error) {
-                console.error("Fetch Error: ", error);
-                console.log(error.message);
-                localStorage.removeItem("token");
-                localStorage.removeItem("username");
+export function isLoggedin () { 
+        if (localStorage.getItem("activeUser") === null || localStorage.getItem("activeUser") === undefined) {  
+                loginBtn[0].textContent = "Login";
+                return false;
         }
+        loginBtn[0].textContent = "Profile";
+        return true;
 }
+
 
 
 /**

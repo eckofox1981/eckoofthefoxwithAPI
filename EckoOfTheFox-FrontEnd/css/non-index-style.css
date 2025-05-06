@@ -163,6 +163,10 @@
 }
 
 #registerDiv {
+    display: flex;
+}
+
+#registerDiv.hidden {
     display: none;
 }
 
