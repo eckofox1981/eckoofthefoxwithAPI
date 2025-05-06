@@ -11,16 +11,24 @@ postOpinionBtn.addEventListener('click', showOpinionForm);
 gatherOpinions();
 
 function gatherOpinions() {
-        //try/catch to ensure return?
         let message;
-        let listOfOpinions = [];
-        if (localStorage.getItem("opinions").length < 1 || localStorage.getItem("opinions") === undefined) {
-                const message = document.createElement("h2");
-                
-                message.textContent = "No opinions on record. Make your voice heard!"
-                
-                mainElement.appendChild(message);
+        let listOfOpinions = localStorage.getItem("opinions")
+        
+        if (listOfOpinions === undefined || listOfOpinions === null) {
+                const messageH2 = document.createElement("h2");
+                messageH2.textContent = "No one has posted any opinions yet, be the first!"
+                mainElement.appendChild(messageH2);
+                return;
         }
+
+        listOfOpinions.JSON.parse(listOfOpinions);
+        for (let opinion of listOfOpinions) {
+                const opinionToPublish = new Opinion(opinion)
+                mainElement.appendChildq(opinionToPublish.publishOpinion());
+                
+        }
+        
+
         
 }
 
@@ -87,42 +95,10 @@ function makeOpinionFields(username) {
 }
 
  function postOpinion(title, text) {
-        console.log("testing: postOpinion(title, text, picture)");
-
-        let opinionDTO = JSON.stringify({
-                "title": title,
-                "opinionText": text,
-
-        })
-        console.log(opinionDTO);
+        //keep going here, make opinoin, don't forget user part constructor (opinionNumber, publicationDate, title, text, author){
         
 
-        fetch("http://localhost:8080/opinion/post", {
-                method: 'POST',
-                headers: {
-                        "Authorization" : "Bearer " + localStorage.getItem("token"),
-                        "Content-type": "application/json"
-                },
-                body: opinionDTO
-        })
-                .then(async response => {
-                        if (!response.ok) {
-                                message = "Error: " + response.status + " - " + (await response.text());
-
-                                throw  new Error(message);
-                        }
-
-                        return response.json();
-                })
-                .then(o => {
-                        let newOpinion = new Opinion (o.opinionID, o.publicationDate, o.title, o.opinionText, o.imgName, o.imgContent, o.imgType, o.comments, o.likes);
-                        showToast("Opinion " + newOpinion.opinionNumber + " saved and published. Your voice will be heard!")
-                        newOpinion.publishOpinion();
-                })
-                .catch(error => {
-                        console.error(message);
-                        showToast(message);
-                })
+        
 }
 
 
