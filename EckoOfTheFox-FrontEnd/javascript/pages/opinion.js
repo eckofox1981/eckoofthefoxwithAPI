@@ -29,9 +29,8 @@ function showOpinionForm() {
         if (isLoggedin()) {
                 const user = JSON.parse(localStorage.getItem("activeUser"));
                 makeOpinionFields(user.username);
-                
         } else {
-
+                showToast("You need to login so people know who you are! Stand for your opinions!")
         }
         
 }

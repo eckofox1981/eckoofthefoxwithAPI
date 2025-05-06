@@ -18,7 +18,7 @@
     <script src="./javascript/pages/navlogo.js" defer></script>
   </head>
   <body
-    class="bg-amber-50 text-justify"
+    class="flex flex-col min-h-screen bg-amber-50 text-justify"
     style="font-family: Noticia; font-size: 1.25rem; color: rgb(39, 39, 39)"
   >
     <header
@@ -81,7 +81,7 @@
       </div>
     </header>
     <!-- SIDEBAR++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
-    <section class="mt-18 flex flex-col lg:flex-row lg:mt-28">
+    <section class="flex-1 mt-18 flex flex-col lg:flex-row lg:mt-28">
       <aside id="sidebar" class="">
         <img
           id="nav-logo"
@@ -181,7 +181,7 @@
       <!-- MAIN CONTENT++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
       <main
         id="opinion-main"
-        class="flex flex-col px-2 border-b mx-0.5 mb-2 w-full lg:max-w-[1300px] lg:mx-auto lg:border-0"
+        class="flex flex-col px-2 border-b mx-0.5 mb-2 w-full lg:max-w-[1300px] lg:mx-auto lg:border-0  max-w-[800px] text-center"
       >
         <h1 class="text-center mb-8" id="opinionPageTitle">Opinions</h1>
         <button class="self-center" id="postOpinionBtn">
@@ -192,7 +192,7 @@
     <!-- FOOTER++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <footer>
       <div id="logo-social-media">
-        <a class="self-center flex flex-col items-center" href="index.html"
+        <a class="self-center flex flex-col items-center mt-auto" href="index.html"
           ><img
             class="mx-auto"
             src="logos/EoF logo BW inverted.png"
