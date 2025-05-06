@@ -1,4 +1,4 @@
-import { User, isLoggedin, showToast } from "./pages/main.js";
+import { User, isLoggedin, showToast } from "./main.js";
 
 const mainElement = document.getElementById("login-main");
 const loginDiv = document.getElementById("loginDiv");
@@ -75,8 +75,11 @@ function login(username, password) {
                         return response.text();
                       })
                       .then(data => {
+                        console.log("running");
+                        
                         localStorage.setItem("token", data);
                         localStorage.setItem("username", username);
+                        console.log(localStorage.getItem("token") + " " + localStorage.getItem("username"));
                         isLoggedin();
                         showToast("You are logged in");
                         showAccount();

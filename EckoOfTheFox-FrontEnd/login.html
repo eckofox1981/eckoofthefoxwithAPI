@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/non-index-style.css" />
     <link rel="stylesheet" href="/css/opinion.css" />
-    <script src="./javascript/main.js" type="module"></script>
-    <script src="./javascript/login.js" type="module"></script>
+    <script src="./javascript/pages/main.js" type="module"></script>
+    <script src="./javascript/pages/login.js" type="module"></script>
   </head>
   <body
     class="bg-amber-50 text-justify min-h-screen flex flex-col"
@@ -80,41 +80,41 @@
       id = "login-main"
       class="mt-18 max-w-[800px] flex flex-col gap-4 text-center px-2 mx-0.5 lg:mt-28 lg:mx-auto lg:border-0 flex-grow bg"
     >
-      <div class="loginOrRegister" id="loginDiv">
+      <form class="loginOrRegister" id="loginDiv">
         <h1 class="self-center text-center mb-8">Login</h1>
         <div>
           <label for="usernameInput">Username:</label>
-          <input type="text" id="usernameInput" />
+          <input type="text" id="usernameInput" placeholder="enter username" autocomplete="username"/>
         </div>
         <div>
           <label for="passwordInput">Password:</label>
-          <input type="password" id="passwordInput" />
+          <input type="password" id="passwordInput" placeholder="enter password" autocomplete="current-password"/>
         </div>
         <div class="self-end flex flex-col gap-0.5 flex-wrap">
           <button id="loginButton">Login</button>
           <button id="googleLoginButton">Login with Google</button>
           <button id="openRegisterButton" class="secondaryButton">Register</button>
         </div>
-      </div>
+      </form>
     </main>
     <!-- TODO: hide-->
     <section
       class="mt-18 max-w-[800px] flex flex-col content-center text-center px-2 mx-0.5 lg:mt-28 lg:mx-auto lg:border-0 flex-grow"
     >
-      <div class="loginOrRegister" id="registerDiv">
+      <form class="loginOrRegister" id="registerDiv">
         <h1 class="self-center text-center mb-8">Register</h1>
 
         <div class="mb-2">
           <label for="registerUsernameInput">Username:</label>
-          <input type="text" id="registerUsernameInput" />
+          <input type="text" id="registerUsernameInput" autocomplete="username"/>
         </div>
         <div class="mb-2">
           <label for="emailInput">Email:</label>
-          <input type="text" id="registerEmailInput" />
+          <input type="text" id="registerEmailInput" autocomplete="email"/>
         </div>
         <div class="mb-2">
           <label for="passwordInput">Password:</label>
-          <input type="password" id="registerPasswordInput" />
+          <input type="password" id="registerPasswordInput" autocomplete="new-password"/>
         </div>
         <div style="display: none" id="warningPassType">
           Password not eligible.
@@ -126,7 +126,7 @@
           </div>
         <div class="mb-2">
           <label for="passwordInput">Confirm password:</label>
-          <input type="password" id="registerPasswordConfirmInput" />
+          <input type="password" id="registerPasswordConfirmInput" autocomplete="new-password"/>
         </div>
         <p style="display: none" id="warningPassMatch">
           The passwords do not match
@@ -134,7 +134,7 @@
         <div class="self-end flex flex-col gap-0.5 flex-wrap">
           <button id="registerButton">Register</button>
         </div>
-      </div>
+      </form>
     </section>
     <!-- FOOTER++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
     <footer class="mt-auto mb-0 left-0">

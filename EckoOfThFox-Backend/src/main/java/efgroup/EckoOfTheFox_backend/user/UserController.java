@@ -30,6 +30,7 @@ public class UserController {
     @PutMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserPasswordDTO userPasswordDTO) {
         try {
+            System.out.println(userPasswordDTO.getPassword());
             return ResponseEntity.ok(userService.login(userPasswordDTO));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Unable to login: " + e.getMessage());
