@@ -5,31 +5,33 @@ const mainElement = document.getElementById("opinion-main");
 const pageTitle = document.getElementById("opinionPageTitle");
 const opinionsOnPage = document.getElementsByClassName("opinion");
 const postOpinionBtn = document.getElementById("postOpinionBtn");
-
+export let listOfOpinions = JSON.parse(localStorage.getItem("opinions"));
 postOpinionBtn.addEventListener('click', showOpinionForm);
 
 gatherOpinions();
 
 function gatherOpinions() {
         let message;
-        let listOfOpinions = localStorage.getItem("opinions")
+        console.log(listOfOpinions);
+        
         
         if (listOfOpinions === undefined || listOfOpinions === null) {
+                listOfOpinions = [];
                 const messageH2 = document.createElement("h2");
                 messageH2.textContent = "No one has posted any opinions yet, be the first!"
                 mainElement.appendChild(messageH2);
                 return;
-        }
-
-        listOfOpinions.JSON.parse(listOfOpinions);
-        for (let opinion of listOfOpinions) {
-                const opinionToPublish = new Opinion(opinion)
-                mainElement.appendChildq(opinionToPublish.publishOpinion());
+        } else {
+                listOfOpinions = JSON.parse(localStorage.getItem("opinions"));
                 
-        }
-        
-
-        
+                for (let opinion of listOfOpinions) {
+                        
+                        
+                        const toPublish = new Opinion(opinion.opinionNumber, opinion.publicationDate, opinion.title, opinion.text, opinion.author, opinion.likes, opinion.dislikes);
+                        mainElement.appendChild(toPublish.publishOpinion());
+                        
+                }
+        }     
 }
 
 
@@ -88,17 +90,27 @@ function makeOpinionFields(username) {
         authorName.style = "align-self: end;"
         messageP.style = "color: white; background-color: rgb(255, 104, 00); border-radius: 0.5rem; padding: 0.5rem; align-self: end;"
 
-        submitBtn.addEventListener("click", () => {postOpinion(titleInput.value, textInput.value)});
+        submitBtn.addEventListener("click", () => {postOpinion(titleInput.value, textInput.value, username)});
 
         mainElement.append(opinionSection);
         opinionSection.append(descriptionText, titleLabel, titleInput, textLabel, textInput, authorName, submitBtn, messageP);
 }
 
- function postOpinion(title, text) {
+ function postOpinion(title, text, username) {
         //keep going here, make opinoin, don't forget user part constructor (opinionNumber, publicationDate, title, text, author){
-        
+        let opinionNumber;
+        if (listOfOpinions === undefined || listOfOpinions === null || listOfOpinions.length === 0) {
+                opinionNumber = 1;
+        } else {
+                opinionNumber = listOfOpinions[listOfOpinions.length-1].opinionNumber +  1; //to allow same order when deleting (also avoids conflicts in IDs)
+        }
+        const opinion = new Opinion(opinionNumber, new Date().toDateString(), title, text, username, 0, 0 );
+        opinion.save();
+        opinion.publishOpinion();
 
-        
+        window.location.reload;
+
+        showToast(`Opinion "${opinion.title}" has been published.`);
 }
 
 
