@@ -15,7 +15,19 @@ export class Opinion  {
         }
 
         save() {
-                //TODO: fix as it saves a new one everytime, need to check if it exists first to be amended or if a new one is needed.
+                for (let i = 0; i < listOfOpinions.length; i++) { //tried with enhanced for loop but the update didn't happen as array reference was neeeded (TODO: learn why)
+                        if (listOfOpinions[i].opinionNumber === this.opinionNumber) {
+                                listOfOpinions[i] = this;
+                                console.log(listOfOpinions[i]);
+                                
+                                localStorage.setItem("opinions", JSON.stringify(listOfOpinions));
+                                console.log(listOfOpinions);
+                                
+                                showToast(`Opinion "${this.title}" was updated!`);
+                                return;
+                        }
+                }
+
                 listOfOpinions.push(this);
                 localStorage.setItem("opinions", JSON.stringify(listOfOpinions));
                 showToast(`Opinion "${this.title} was saved!`);

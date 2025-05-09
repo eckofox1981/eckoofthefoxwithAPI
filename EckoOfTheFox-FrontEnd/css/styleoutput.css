@@ -301,12 +301,6 @@
   .flex-1 {
     flex: 1;
   }
-  .flex-1\/1 {
-    flex: calc(1/1 * 100%);
-  }
-  .flex-1\/2 {
-    flex: calc(1/2 * 100%);
-  }
   .flex-grow {
     flex-grow: 1;
   }

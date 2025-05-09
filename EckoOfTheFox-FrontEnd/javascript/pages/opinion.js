@@ -108,7 +108,7 @@ function makeOpinionFields(username) {
         opinion.save();
         opinion.publishOpinion();
 
-        window.location.reload;
+        window.location.href = "opinions.html";
 
         showToast(`Opinion "${opinion.title}" has been published.`);
 }
