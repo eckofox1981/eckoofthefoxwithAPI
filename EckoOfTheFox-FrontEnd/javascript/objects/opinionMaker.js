@@ -27,11 +27,10 @@ export class Opinion  {
                                 return;
                         }
                 }
-
                 listOfOpinions.push(this);
                 localStorage.setItem("opinions", JSON.stringify(listOfOpinions));
-                showToast(`Opinion "${this.title} was saved!`);
-                
+                showToast(`Opinion "${this.title}" was saved!`);
+                return; 
         }
 
         publishOpinion () {
@@ -119,8 +118,7 @@ export class Opinion  {
                 opinionTitle.addEventListener('click', () => {showSingleOpinion(this.opinionNumber)});
                 commentBtn.addEventListener('click', () => {
                         showCommentConsole(commentDiv, commentBtn, this.opinionNumber)
-                        console.log(this);
-                        }); //opinionNumber is undefined, why the f....?
+                        });
                 likeSymbol.addEventListener("click", () => {
                         this.likeOpinion(likeCounter) }
                 );

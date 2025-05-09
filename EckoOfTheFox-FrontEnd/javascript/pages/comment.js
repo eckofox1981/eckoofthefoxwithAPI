@@ -1,6 +1,8 @@
 import { Comment } from "../objects/commentMaker.js";
+import { showToast } from "./main.js";
 
 export function showCommentConsole(incomingCommentDiv, commentBtn, opinionNumber) {
+        showToast("Comments are shown on the opinion's page, maybe you should see what other said first.")
         //create console
         commentBtn.disabled = true;
         commentBtn.style = "color: rgb(62, 62, 62); background-color: rgba(62, 62, 62, 0); border: 1px solid rgb(62, 62, 62); max-height: fit-content; margin-right: 1rem;";

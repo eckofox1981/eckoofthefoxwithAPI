@@ -24,10 +24,10 @@ function gatherOpinions() {
         } else {
                 listOfOpinions = JSON.parse(localStorage.getItem("opinions"));
                 
-                for (let opinion of listOfOpinions) {
+                for (let i = listOfOpinions.length -1; i >= 0; i--) {
                         
                         
-                        const toPublish = new Opinion(opinion.opinionNumber, opinion.publicationDate, opinion.title, opinion.text, opinion.author, opinion.likes, opinion.dislikes);
+                        const toPublish = new Opinion(listOfOpinions[i].opinionNumber, listOfOpinions[i].publicationDate, listOfOpinions[i].title, listOfOpinions[i].text, listOfOpinions[i].author, listOfOpinions[i].likes, listOfOpinions[i].dislikes);
                         mainElement.appendChild(toPublish.publishOpinion());
                         
                 }
@@ -90,7 +90,10 @@ function makeOpinionFields(username) {
         authorName.style = "align-self: end;"
         messageP.style = "color: white; background-color: rgb(255, 104, 00); border-radius: 0.5rem; padding: 0.5rem; align-self: end;"
 
-        submitBtn.addEventListener("click", () => {postOpinion(titleInput.value, textInput.value, username)});
+        submitBtn.addEventListener("click", (event) => {
+                event.preventDefault();
+                postOpinion(titleInput.value, textInput.value, username)
+        });
 
         mainElement.append(opinionSection);
         opinionSection.append(descriptionText, titleLabel, titleInput, textLabel, textInput, authorName, submitBtn, messageP);
@@ -107,10 +110,12 @@ function makeOpinionFields(username) {
         const opinion = new Opinion(opinionNumber, new Date().toDateString(), title, text, username, 0, 0 );
         opinion.save();
         opinion.publishOpinion();
+        //gives time for toast to show
+        setTimeout(() => { 
+                window.location.href = "opinions.html";
+            }, 3000);
 
-        window.location.href = "opinions.html";
 
-        showToast(`Opinion "${opinion.title}" has been published.`);
 }
 
 
