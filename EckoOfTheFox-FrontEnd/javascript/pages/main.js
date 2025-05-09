@@ -7,7 +7,6 @@ export class User {
                 this.likesMade = likesMade;
         }
 }
-export let listOfOpinions = JSON.parse(localStorage.getItem("opinions"));
 
 /*Activates click function on hamburger menu for smaller screens (<1024px)
 other hover effect still in action, see style.css ln 76 - 130*/
