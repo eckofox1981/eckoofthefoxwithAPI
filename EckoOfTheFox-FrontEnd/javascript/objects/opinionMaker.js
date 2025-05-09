@@ -1,6 +1,6 @@
 import { showCommentConsole } from "../pages/comment.js";
 import { showToast } from "../pages/main.js";
-import { listOfOpinions } from "../pages/opinion.js";
+import { listOfOpinions } from "../pages/main.js";
 
 export class Opinion  {
 
@@ -176,7 +176,8 @@ function likeComment() {
 }
 
 function showSingleOpinion(opinionNumber) {
-
-//todo sort it out
+        const url = "./opinion.html?opinion_number=" + encodeURIComponent(opinionNumber);
+        console.log(url);
         
+        window.location.href = url;
 }
