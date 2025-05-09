@@ -3,8 +3,7 @@
 
 .opinion {
         padding: .5rem;
-        border-bottom: 1px solid rgb(62, 62, 62);
-        border-top: 1px solid rgb(62, 62, 62);
+
         width: 100%;
         margin-top: 2rem;
         display: flex;
@@ -35,8 +34,11 @@
 
 .comment-container {
         /* TODO */
-        background-color: blue;
         height: 20px;
+        text-align: center;
+        font-style: italic;
+        border: 1px solid rgb(62, 62, 62);
+        min-height: fit-content;
 }
 
 .comment-console {

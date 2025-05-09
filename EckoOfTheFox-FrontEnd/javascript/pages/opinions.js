@@ -5,15 +5,15 @@ const mainElement = document.getElementById("opinion-main");
 const pageTitle = document.getElementById("opinionPageTitle");
 const opinionsOnPage = document.getElementsByClassName("opinion");
 const postOpinionBtn = document.getElementById("postOpinionBtn");
-let listOfOpinions = JSON.parse(localStorage.getItem("opinions")); //have to get as import seems to define it as a constanst.
+let listOfOpinions = JSON.parse(localStorage.getItem("opinions")); //have to have "let" as import seems to define it as a constanst.
 postOpinionBtn.addEventListener('click', showOpinionForm);
+
+
 
 gatherOpinions();
 
-function gatherOpinions() {
-        let message;
-        console.log(listOfOpinions);
-        
+
+function gatherOpinions() {        
         
         if (listOfOpinions === undefined || listOfOpinions === null) {
                 listOfOpinions = [];

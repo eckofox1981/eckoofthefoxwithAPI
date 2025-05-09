@@ -29,6 +29,7 @@ export class Opinion  {
                 }
                 listOfOpinions.push(this);
                 localStorage.setItem("opinions", JSON.stringify(listOfOpinions));
+                localStorage.setItem(`commentsFor${this.opinionNumber}`, []);
                 showToast(`Opinion "${this.title}" was saved!`);
                 return; 
         }
@@ -67,7 +68,6 @@ export class Opinion  {
                 likeSymbol.setAttribute('height', '1rem');
                 likeSymbol.setAttribute('width', '1rem');
                 likeSymbol.setAttribute('version', '1.1');
-
                 likeSymbol.setAttribute('viewBox', '0 0 486.926 486.926');
                 dislikeSymbol.setAttribute('xml:space', 'preserve');
                 dislikeSymbol.setAttribute('fill', 'rgb(62, 62, 62)');
@@ -82,7 +82,6 @@ export class Opinion  {
                 opinionTitle.textContent = this.title;
                 opinionParagraph.textContent = this.text;
                 opinionAuthor.textContent = this.author;
-                console.log(typeof(this.author));
                 likeCounter.textContent = this.likes;
                 dislikeCounter.textContent = this.dislikes;
                 commentBtn.textContent = "Comment";

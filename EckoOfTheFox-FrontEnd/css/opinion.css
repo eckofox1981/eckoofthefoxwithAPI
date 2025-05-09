@@ -39,11 +39,7 @@
         text-align: center;
 }
 
-.comment-container {
-        /* TODO */
-        background-color: blue;
-        height: 20px;
-}
+
 
 .comment-console {
         display: flex;

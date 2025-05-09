@@ -325,7 +325,8 @@ footer > div {
     visibility: hidden;
     min-width: 20rem; 
     max-width: fit-content;
-    margin-left: -125px;
+    margin-left: 30%;
+    margin-right: 30%;
     background-color: rgb(255, 104, 0); 
     color: white;
     text-align: center;
@@ -333,7 +334,6 @@ footer > div {
     padding: 0.5rem;
     position: fixed;
     z-index: 100;
-    left: 50%; 
     top: 10%;
 }
 
