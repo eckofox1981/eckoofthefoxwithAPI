@@ -19,18 +19,21 @@ function publishSingleOpinion() {
     }
 
     let commentList = localStorage.getItem(`commentsFor${singleOpinion.opinionNumber}`);
-    const commentContainer = document.createElement("div");
-    commentContainer.className = "comment-container";
-    if (commentList === undefined || commentList === null || commentList.length < 1) {
-        commentContainer.textContent = "Nobody has commend this yet (be the first!)";
+    const commentContainers = document.createElement("section");
+    commentContainers.className = "comment-containers";
+    console.log(commentList);
+    
+    if (commentList === null || commentList.length < 1) {
+        commentContainers.textContent = "Nobody has commented this yet (be the first!)";
         mainElement.appendChild(commentContainer);
         return
     }
 
     for (let i = 0; i < commentList.length; i++) {
-        const comment = new Comment(new Date().toLocaleString, commentList[i].opinionNumber, commentList[i].opinionTitle, commentList[i].text, commentList[i].author, commentList[i].likes, commentList[i].dislikes);
-        commentContainer.append(comment.publish());
+        const comment = new Comment(commentList[i].commentNumber, new Date().toLocaleString(), commentList[i].opinionNumber, commentList[i].text, commentList[i].author, commentList[i].likes, commentList[i].dislikes);
+        
+        commentContainers.append(comment.publish());
     }
-    mainElement.appendChild(commentContainer);
+    mainElement.appendChild(commentContainers);
 }
 

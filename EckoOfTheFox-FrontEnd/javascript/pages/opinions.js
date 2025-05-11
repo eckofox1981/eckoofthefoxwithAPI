@@ -6,11 +6,12 @@ const pageTitle = document.getElementById("opinionPageTitle");
 const opinionsOnPage = document.getElementsByClassName("opinion");
 const postOpinionBtn = document.getElementById("postOpinionBtn");
 let listOfOpinions = JSON.parse(localStorage.getItem("opinions")); //have to have "let" as import seems to define it as a constanst.
-postOpinionBtn.addEventListener('click', showOpinionForm);
 
 
-
-gatherOpinions();
+if (window.location.href.includes("opinions.html")) {
+        gatherOpinions();
+        postOpinionBtn.addEventListener("click", showOpinionForm);
+}
 
 
 function gatherOpinions() {        
@@ -29,7 +30,6 @@ function gatherOpinions() {
                         
                         const toPublish = new Opinion(listOfOpinions[i].opinionNumber, listOfOpinions[i].publicationDate, listOfOpinions[i].title, listOfOpinions[i].text, listOfOpinions[i].author, listOfOpinions[i].likes, listOfOpinions[i].dislikes);
                         mainElement.appendChild(toPublish.publishOpinion());
-                        
                 }
         }     
 }
@@ -100,7 +100,7 @@ function makeOpinionFields(username) {
 }
 
  function postOpinion(title, text, username) {
-        //keep going here, make opinoin, don't forget user part constructor (opinionNumber, publicationDate, title, text, author){
+        //keep going here, make opinoin, don't forget user part constructor (opinionNumber, publicationDate, title, text, author)
         let opinionNumber;
         if (listOfOpinions === undefined || listOfOpinions === null || listOfOpinions.length === 0) {
                 opinionNumber = 1;

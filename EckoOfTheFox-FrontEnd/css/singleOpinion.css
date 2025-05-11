@@ -32,14 +32,32 @@
         text-align: center;
 }
 
-.comment-container {
+.comment-containers {
         /* TODO */
+        display: flex;
+        flex-direction: column;
         height: 20px;
-        text-align: center;
-        font-style: italic;
+        width: 100%;
         border: 1px solid rgb(62, 62, 62);
         min-height: fit-content;
+
 }
+
+.comment-container {
+        /* TODO */
+        display: flex;
+        flex-direction: column;
+        height: 20px;
+        width: 95%;
+        border-bottom: 1px solid rgb(62, 62, 62);
+        min-height: fit-content;
+
+}
+
+.date {
+        align-self: left
+}
+
 
 .comment-console {
         display: flex;

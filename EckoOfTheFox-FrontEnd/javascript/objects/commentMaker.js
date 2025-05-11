@@ -1,10 +1,10 @@
 import { showToast } from "../pages/main.js";
 
 export class Comment {
-        constructor(publicationDate, opinionNumber, opinionTitle, commentText, author, likes, dislike) {
+        constructor(commentNumber, publicationDate, opinionNumber, commentText, author, likes, dislike) {
+                this.commentNumber = this.commentNumber;
                 this.publicationDate = publicationDate;
                 this.opinionNumber = opinionNumber;
-                this.opinionTitle = opinionTitle;
                 this.commentText = commentText;
                 this.author = author;
                 this.likes = likes;
@@ -12,12 +12,35 @@ export class Comment {
         }
 
         save() {
-                //TODO
-                
+                let opinionCommentList =  localStorage.getItem(`commentFor${this.opinionNumber}`);
+                if (opinionCommentList === undefined || opinionCommentList === null) {
+                        opinionCommentList = [this];
+                        return;
+                }
+
+                for (let i = 0; i < opinionCommentList.length; i++) { 
+                        if (opinionCommentList[i].commentNumber === this.commentNumber) {
+                                opinionCommentList[i] = this;
+                                console.log(opinionCommentList[i]);
+
+                                localStorage.setItem(`commentFor${this.opinionNumber}`, JSON.stringify(opinionCommentList));
+                                console.log(`commentFor${this.opinionNumber}`);
+
+                                showToast("This comment was updated!");
+                                return;
+                        }
+                }
+                opinionCommentList.push(this);
+                localStorage.setItem("opinions", JSON.stringify(listOfOpinions));
+                localStorage.setItem(`commentFor${this.opinionNumber}`, JSON.stringify(opinionCommentList));
+                showToast(`Your comment was saved!`);
+                return; 
+
         }
 
         publish() {
                 //make or get element
+                const singleCommentContainer = document.createElement("article");
                 const publicationDate = document.createElement("i");
                 const commentText = document.createElement("p");
                 const commentAuthor = document.createElement("i");
@@ -32,6 +55,7 @@ export class Comment {
                 //classname
                 singleCommentContainer.className = "comment-Container";
                 commentAuthor.className = "author";
+                publicationDate.className ="date"
 
                 //styling
                 likeBar.style = "display: flex; gap: 0.25rem; align-items: center; justify-content: flex-end; margin-right: 1rem";
@@ -52,6 +76,8 @@ export class Comment {
                 publicationDate.textContent = this.publicationDate;
                 commentText.textContent = this.commentText;
                 commentAuthor.textContent = this.author;
+                likeCounter.textContent = this.likes;
+                dislikeCounter.textContent = this.dislike;
                 likeSymbol.innerHTML = `
                                         <g>
                                         <path d="M462.8,181.564c-12.3-10.5-27.7-16.2-43.3-16.2h-15.8h-56.9h-32.4v-75.9c0-31.9-9.3-54.9-27.7-68.4
@@ -82,7 +108,7 @@ export class Comment {
 
                 //add listen
                 likeSymbol.addEventListener("click", () => {
-                    this.likeOpinion(likeCounter) }
+                    this.likeComment(likeCounter) }
                 );
                 likeSymbol.addEventListener('mouseenter', function() {
                         likeSymbol.setAttribute('fill', 'rgb(255, 104, 0)');
@@ -94,7 +120,7 @@ export class Comment {
                 });
 
                 dislikeSymbol.addEventListener("click", () => {
-                        this.dislikeOpinion(dislikeCounter) }
+                        this.dislikeComment(dislikeCounter) }
                 );
                 dislikeSymbol.addEventListener('mouseenter', function() {
                         likeSymbol.setAttribute('fill', 'rgb(255, 104, 0)');

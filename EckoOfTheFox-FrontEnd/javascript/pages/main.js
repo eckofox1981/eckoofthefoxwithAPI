@@ -8,6 +8,10 @@ export class User {
         }
 }
 export let listOfOpinions = JSON.parse(localStorage.getItem("opinions"));
+if (listOfOpinions === undefined || listOfOpinions === null || listOfOpinions.length === 0) {
+        listOfOpinions = [];
+        localStorage.setItem('opinions', listOfOpinions);
+}
 
 /*Activates click function on hamburger menu for smaller screens (<1024px)
 other hover effect still in action, see style.css ln 76 - 130*/

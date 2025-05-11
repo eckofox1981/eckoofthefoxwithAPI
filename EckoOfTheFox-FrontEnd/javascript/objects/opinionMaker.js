@@ -29,7 +29,7 @@ export class Opinion  {
                 }
                 listOfOpinions.push(this);
                 localStorage.setItem("opinions", JSON.stringify(listOfOpinions));
-                localStorage.setItem(`commentsFor${this.opinionNumber}`, []);
+                localStorage.setItem(`commentsFor${this.opinionNumber}`, null);
                 showToast(`Opinion "${this.title}" was saved!`);
                 return; 
         }

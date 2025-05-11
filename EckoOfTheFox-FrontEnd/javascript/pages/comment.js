@@ -37,7 +37,18 @@ export function showCommentConsole(incomingCommentDiv, commentBtn, opinionNumber
 }
 
 function submitComment(text, incomingCommentDiv, opinionNumber) {
-        let comment = new Comment(null, null, opinionNumber, "Digital Privacy", text, null, null);
+        console.log(localStorage.getItem(`commentFor${opinionNumber}`));
+        
+        let opinionCommentList = localStorage.getItem(`commentFor${opinionNumber}`);
+        const user = JSON.parse(localStorage.getItem("activeUser"));
+        let commentNumber;
+
+        if (opinionCommentList === undefined || opinionCommentList === null || listOfOpinions.length === 0) {
+                commentNumber = 1;
+        } else {
+                commentNumber = opinionCommentList[opinionCommentList.length-1].commentNumber +  1; //to allow same order when deleting (also avoids conflicts in IDs)
+        }
+        let comment = new Comment(commentNumber, new Date().toDateString(), opinionNumber, text, user.username, 0, 0);
         comment.save();
-        comment.publish(incomingCommentDiv);
+        incomingCommentDiv.append(comment.publish());
 }
