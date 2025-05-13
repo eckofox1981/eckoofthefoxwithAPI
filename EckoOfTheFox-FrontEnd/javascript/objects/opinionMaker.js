@@ -1,6 +1,8 @@
 import { showCommentConsole } from "../pages/comment.js";
-import { showToast } from "../pages/main.js";
-import { listOfOpinions } from "../pages/main.js";
+import { showToast, isLoggedin } from "../pages/main.js";
+import { listOfObjectOpinions, saveObjectListOfOpinions } from "./listOfOpinions.js";
+
+
 
 export class Opinion  {
 
@@ -15,23 +17,23 @@ export class Opinion  {
         }
 
         save() {
+                let listOfOpinions = listOfObjectOpinions();
                 for (let i = 0; i < listOfOpinions.length; i++) { //tried with enhanced for loop but the update didn't happen as array reference was neeeded (TODO: learn why)
                         if (listOfOpinions[i].opinionNumber === this.opinionNumber) {
                                 listOfOpinions[i] = this;
-                                console.log(listOfOpinions[i]);
+                                saveObjectListOfOpinions(listOfOpinions);
                                 
-                                localStorage.setItem("opinions", JSON.stringify(listOfOpinions));
-                                console.log(listOfOpinions);
+                                console.log(listOfObjectOpinions());
                                 
                                 showToast(`Opinion "${this.title}" was updated!`);
                                 return;
                         }
                 }
                 listOfOpinions.push(this);
-                localStorage.setItem("opinions", JSON.stringify(listOfOpinions));
-                localStorage.setItem(`commentsFor${this.opinionNumber}`, null);
+                saveObjectListOfOpinions(listOfOpinions);
                 showToast(`Opinion "${this.title}" was saved!`);
-                return; 
+                return;
+        
         }
 
         publishOpinion () {
@@ -84,7 +86,7 @@ export class Opinion  {
                 opinionAuthor.textContent = this.author;
                 likeCounter.textContent = this.likes;
                 dislikeCounter.textContent = this.dislikes;
-                commentBtn.textContent = "Comment";
+                commentBtn.textContent = "Go to article to comment";
                 likeSymbol.innerHTML = `
                                         <g>
                                         <path d="M462.8,181.564c-12.3-10.5-27.7-16.2-43.3-16.2h-15.8h-56.9h-32.4v-75.9c0-31.9-9.3-54.9-27.7-68.4
@@ -116,8 +118,16 @@ export class Opinion  {
                 //add listener
                 opinionTitle.addEventListener('click', () => {showSingleOpinion(this.opinionNumber)});
                 commentBtn.addEventListener('click', () => {
-                        showCommentConsole(commentDiv, commentBtn, this.opinionNumber)
-                        });
+                        
+                        if (!isLoggedin()) {
+                                showToast("You need to be loggedin to comment");
+                        } else if (window.location.href.includes("opinions.html")) {
+                                window.location.href = "./opinion.html?opinion_number=" + encodeURIComponent(this.opinionNumber);
+                        } else {
+                                showCommentConsole(commentDiv, commentBtn, this.opinionNumber)
+                        }
+
+                });
                 likeSymbol.addEventListener("click", () => {
                         this.likeOpinion(likeCounter) }
                 );
@@ -149,6 +159,16 @@ export class Opinion  {
                 likeBar.append(commentBtn, likeSymbol, likeCounter, dislikeSymbol, dislikeCounter);
                 likeAndCommentDiv.append(commentDiv);
 
+                if (window.location.href.includes("opinion.html")) {   
+                        commentBtn.textContent = "Comment"                     
+                        const commentContainers = document.createElement("section");
+                        commentContainers.className = "comment-containers";
+                        commentContainers.id = "commentSection";
+                        opinionContainer.appendChild(commentContainers);
+                }
+
+                //TODO: lägga om användaren samma som author = delete knapp
+
                 return opinionContainer;
         }
 
@@ -164,12 +184,6 @@ export class Opinion  {
                 dislikeCounter.textContent = this.dislikes;
         }
         
-}
-
-
-
-function likeComment() {
-        console.log("likeComment");
 }
 
 function showSingleOpinion(opinionNumber) {

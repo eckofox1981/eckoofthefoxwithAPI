@@ -1,11 +1,13 @@
 import {Opinion} from "../objects/opinionMaker.js";
-import { User, isLoggedin, showToast } from "./main.js";
+import { isLoggedin, showToast } from "./main.js";
+import { listOfObjectOpinions } from "../objects/listOfOpinions.js";
+import { listOfObjectComments } from "../objects/listOfComments.js";
 
 const mainElement = document.getElementById("opinion-main");
 const pageTitle = document.getElementById("opinionPageTitle");
 const opinionsOnPage = document.getElementsByClassName("opinion");
 const postOpinionBtn = document.getElementById("postOpinionBtn");
-let listOfOpinions = JSON.parse(localStorage.getItem("opinions")); //have to have "let" as import seems to define it as a constanst.
+let listOfOpinions = listOfObjectOpinions();
 
 
 if (window.location.href.includes("opinions.html")) {
@@ -15,8 +17,9 @@ if (window.location.href.includes("opinions.html")) {
 
 
 function gatherOpinions() {        
+        console.log(listOfOpinions);
         
-        if (listOfOpinions === undefined || listOfOpinions === null) {
+        if (listOfOpinions === undefined || listOfOpinions === null || listOfOpinions.length === 0) {
                 listOfOpinions = [];
                 const messageH2 = document.createElement("h2");
                 messageH2.textContent = "No one has posted any opinions yet, be the first!"
@@ -100,20 +103,27 @@ function makeOpinionFields(username) {
 }
 
  function postOpinion(title, text, username) {
-        //keep going here, make opinoin, don't forget user part constructor (opinionNumber, publicationDate, title, text, author)
+        console.log(title, text, username);
         let opinionNumber;
         if (listOfOpinions === undefined || listOfOpinions === null || listOfOpinions.length === 0) {
                 opinionNumber = 1;
+                console.log(opinionNumber);
+                
         } else {
                 opinionNumber = listOfOpinions[listOfOpinions.length-1].opinionNumber +  1; //to allow same order when deleting (also avoids conflicts in IDs)
         }
         const opinion = new Opinion(opinionNumber, new Date().toDateString(), title, text, username, 0, 0 );
+        console.log(opinion);
+        
+        
         opinion.save();
         opinion.publishOpinion();
+        console.log("running");
+        
         //gives time for toast to show
         setTimeout(() => { 
                 window.location.href = "opinions.html";
-            }, 3000);
+        }, 3000);
 
 
 }

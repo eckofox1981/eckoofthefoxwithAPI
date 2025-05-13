@@ -1,20 +1,24 @@
 import { showToast } from "../pages/main.js";
+import { listOfObjectComments, saveObjectListOfComments } from "./listOfComments.js";
+
 
 export class Comment {
-        constructor(commentNumber, publicationDate, opinionNumber, commentText, author, likes, dislike) {
-                this.commentNumber = this.commentNumber;
+        constructor(commentNumber, publicationDate, opinionNumber, commentText, author, likes, dislikes) {
+                this.commentNumber = commentNumber;
                 this.publicationDate = publicationDate;
                 this.opinionNumber = opinionNumber;
                 this.commentText = commentText;
                 this.author = author;
                 this.likes = likes;
-                this.dislike = dislike;
+                this.dislikes = dislikes;
         }
 
         save() {
-                let opinionCommentList =  localStorage.getItem(`commentFor${this.opinionNumber}`);
-                if (opinionCommentList === undefined || opinionCommentList === null) {
-                        opinionCommentList = [this];
+                let opinionCommentList =  listOfObjectComments(this.opinionNumber);
+                if (opinionCommentList === undefined || opinionCommentList === null || opinionCommentList.length === 0) {
+                        opinionCommentList.push(this);
+                        saveObjectListOfComments(this.opinionNumber, opinionCommentList);
+                        showToast("Your comment was saved.");
                         return;
                 }
 
@@ -23,19 +27,16 @@ export class Comment {
                                 opinionCommentList[i] = this;
                                 console.log(opinionCommentList[i]);
 
-                                localStorage.setItem(`commentFor${this.opinionNumber}`, JSON.stringify(opinionCommentList));
-                                console.log(`commentFor${this.opinionNumber}`);
+                                saveObjectListOfComments(this.opinionNumber, opinionCommentList);
 
                                 showToast("This comment was updated!");
                                 return;
                         }
+
                 }
                 opinionCommentList.push(this);
-                localStorage.setItem("opinions", JSON.stringify(listOfOpinions));
-                localStorage.setItem(`commentFor${this.opinionNumber}`, JSON.stringify(opinionCommentList));
-                showToast(`Your comment was saved!`);
-                return; 
-
+                saveObjectListOfComments(this.opinionNumber, opinionCommentList);
+                showToast("Your comment was saved.");
         }
 
         publish() {
@@ -53,9 +54,9 @@ export class Comment {
 
 
                 //classname
-                singleCommentContainer.className = "comment-Container";
+                singleCommentContainer.className = "comment-container";
                 commentAuthor.className = "author";
-                publicationDate.className ="date"
+                publicationDate.className ="date";
 
                 //styling
                 likeBar.style = "display: flex; gap: 0.25rem; align-items: center; justify-content: flex-end; margin-right: 1rem";
@@ -77,7 +78,7 @@ export class Comment {
                 commentText.textContent = this.commentText;
                 commentAuthor.textContent = this.author;
                 likeCounter.textContent = this.likes;
-                dislikeCounter.textContent = this.dislike;
+                dislikeCounter.textContent = this.dislikes;
                 likeSymbol.innerHTML = `
                                         <g>
                                         <path d="M462.8,181.564c-12.3-10.5-27.7-16.2-43.3-16.2h-15.8h-56.9h-32.4v-75.9c0-31.9-9.3-54.9-27.7-68.4
@@ -135,6 +136,21 @@ export class Comment {
                 likeBar.append(likeSymbol, likeCounter, dislikeSymbol, dislikeCounter);
                 singleCommentContainer.append(publicationDate, commentText, commentAuthor, likeBar);
                 return singleCommentContainer;
-                //lägga om användaren samma som author = delete knapp
-        }       
+                
+                
+                
+                //TODO: lägga om användaren samma som author = delete knapp
+        }
+
+        likeComment(likeCounter) {
+                this.likes = this.likes + 1;
+                this.save(); 
+                likeCounter.textContent = this.likes;
+        }
+
+        dislikeComment(dislikeCounter) {
+                this.dislikes = this.dislikes +1;
+                this.save();
+                dislikeCounter.textContent = this.dislikes;
+        }
 }
