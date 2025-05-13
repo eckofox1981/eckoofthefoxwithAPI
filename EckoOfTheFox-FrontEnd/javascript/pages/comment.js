@@ -25,7 +25,7 @@ export function showCommentConsole(incomingCommentDiv, commentBtn, opinionNumber
         cancelBtn.textContent = "Cancel";
 
         //listeners
-        submitBtn.addEventListener('click', () => { submitComment(textArea, incomingCommentDiv, opinionNumber)});
+        submitBtn.addEventListener('click', () => { submitComment(textArea, opinionNumber)});
         cancelBtn.addEventListener('click', () => {
                 commentBtn.style = "max-height: fit-content; margin-right: 1rem;";
                 commentBtn.disabled = false;
@@ -38,9 +38,8 @@ export function showCommentConsole(incomingCommentDiv, commentBtn, opinionNumber
         buttons.append(cancelBtn, submitBtn);
 }
 
-function submitComment(textArea, incomingCommentDiv, opinionNumber) {
-        
-        console.log(opinionNumber);
+function submitComment(textArea, opinionNumber) {
+        const commentContainers = document.getElementById("commentSection");
         
         let opinionCommentList = listOfObjectComments(opinionNumber);
         
@@ -55,6 +54,6 @@ function submitComment(textArea, incomingCommentDiv, opinionNumber) {
         
         let comment = new Comment(commentNumber, new Date().toDateString(), opinionNumber, textArea.value, user.username, 0, 0);
         comment.save();
-        incomingCommentDiv.append(comment.publish());
+        commentContainers.append(comment.publish());
         textArea.value = "";
 }

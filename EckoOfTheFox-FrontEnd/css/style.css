@@ -181,11 +181,13 @@ input {
 }
 
 .date-and-title {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     margin-bottom: 2px;
     div {
         margin-left: 0.5rem;
-        margin-right: auto;
+        align-self: flex-start;
         margin-bottom: 0;
         font-size: small;
         font-style: italic;

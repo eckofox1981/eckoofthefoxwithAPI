@@ -37,7 +37,6 @@ export class Opinion  {
         }
 
         publishOpinion () {
-
                 const opinionContainer = document.createElement("section");
                 const opinionDateAndTitle = document.createElement("div");
                 const opinionDate = document.createElement("div");
@@ -168,6 +167,25 @@ export class Opinion  {
                 }
 
                 //TODO: lägga om användaren samma som author = delete knapp
+                
+                let activeUser = localStorage.getItem("activeUser");
+                let username;
+                if (activeUser !== null) {
+                        activeUser = JSON.parse(activeUser);
+                        username = activeUser.username;
+                } else {
+                        username = "@@===usXDSffzs½42312"; //random name to make sure no accidental activation of deleteOpinion
+                }
+                
+
+                if (this.author === username || false) {
+                        const deleteBtn = document.createElement("button");
+                        deleteBtn.className = "dangerousBtn";
+                        deleteBtn.style.height = "2rem";
+                        deleteBtn.textContent = "Delete Opinion";
+                        deleteBtn.addEventListener('click', this.delete.bind(this)); //if not bound (".bind") when I use the this-syntax in delete it will reference to the button not the opinion
+                        likeBar.insertBefore(deleteBtn, commentBtn);
+                }
 
                 return opinionContainer;
         }
@@ -182,6 +200,26 @@ export class Opinion  {
                 this.dislikes = this.dislikes +1;
                 this.save();
                 dislikeCounter.textContent = this.dislikes;
+        }
+
+        delete() {
+                let listOfOpinions = listOfObjectOpinions();
+                console.log( this.opinionNumber, listOfOpinions)
+                for (let i = 0; i < listOfOpinions.length; i++) {
+                        if (listOfOpinions[i].opinionNumber === this.opinionNumber) {
+                                listOfOpinions.splice(i, 1);
+                                saveObjectListOfOpinions(listOfOpinions);
+                                
+                                console.log(listOfObjectOpinions());
+                                
+                                showToast(`Opinion "${this.title}" was deleted.`);
+                                //gives time for toast to show
+                                setTimeout(() => { 
+                                        window.location.reload();
+                                }, 3000);
+                                return;
+                        }
+                }
         }
         
 }

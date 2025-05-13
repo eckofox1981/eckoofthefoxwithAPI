@@ -25,7 +25,6 @@ export class Comment {
                 for (let i = 0; i < opinionCommentList.length; i++) { 
                         if (opinionCommentList[i].commentNumber === this.commentNumber) {
                                 opinionCommentList[i] = this;
-                                console.log(opinionCommentList[i]);
 
                                 saveObjectListOfComments(this.opinionNumber, opinionCommentList);
 
@@ -135,11 +134,30 @@ export class Comment {
                 //append!
                 likeBar.append(likeSymbol, likeCounter, dislikeSymbol, dislikeCounter);
                 singleCommentContainer.append(publicationDate, commentText, commentAuthor, likeBar);
-                return singleCommentContainer;
+                
                 
                 
                 
                 //TODO: lägga om användaren samma som author = delete knapp
+                let activeUser = localStorage.getItem("activeUser");
+                let username;
+                if (activeUser !== null) {
+                        activeUser = JSON.parse(activeUser);
+                        username = activeUser.username;
+                } else {
+                        username = "@@===usXDSffzs½42312"; //random name to make sure no accidental activation of deleteOpinion
+                }
+
+                if (this.author === username || false) {
+                        const deleteBtn = document.createElement("button");
+                        deleteBtn.className = "dangerousBtn";
+                        deleteBtn.style.height = "2rem";
+                        deleteBtn.textContent = "Delete Comment";
+                        deleteBtn.addEventListener('click', this.delete.bind(this)); //if not bound (".bind") when I use the this-syntax in delete it will reference to the button not the opinion
+                        likeBar.insertBefore(deleteBtn, likeSymbol);
+                }
+
+                return singleCommentContainer;
         }
 
         likeComment(likeCounter) {
@@ -153,4 +171,22 @@ export class Comment {
                 this.save();
                 dislikeCounter.textContent = this.dislikes;
         }
+
+        delete() {
+                        let listOfComments = listOfObjectComments(this.opinionNumber);
+                        
+                        for (let i = 0; i < listOfComments.length; i++) {
+                                if (listOfComments[i].commentNumber === this.commentNumber) {
+                                        listOfComments.splice(i, 1);
+                                        saveObjectListOfComments(this.opinionNumber, listOfComments);
+                                        
+                                        showToast(`Your comment was deleted.`);
+                                        //gives time for toast to show
+                                        setTimeout(() => { 
+                                                window.location.reload();
+                                        }, 3000);
+                                        return;
+                                }
+                        }
+                }
 }

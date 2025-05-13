@@ -16,9 +16,7 @@ if (window.location.href.includes("opinions.html")) {
 }
 
 
-function gatherOpinions() {        
-        console.log(listOfOpinions);
-        
+function gatherOpinions() {
         if (listOfOpinions === undefined || listOfOpinions === null || listOfOpinions.length === 0) {
                 listOfOpinions = [];
                 const messageH2 = document.createElement("h2");
@@ -78,8 +76,7 @@ function makeOpinionFields(username) {
 
         authorName.textContent = "by " + username;
         
-        //TODO REMOVE:
-        messageP.textContent = "Something is wrong message"
+
 
         titleInput.setAttribute("placeholder", "Enter title here");
         textInput.setAttribute("placeholder", "Enter text here");

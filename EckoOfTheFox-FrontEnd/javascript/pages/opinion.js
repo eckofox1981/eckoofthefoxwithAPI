@@ -30,7 +30,7 @@ function publishSingleOpinion() {
         commentContainers.textContent = "Nobody has commented this yet (be the first!)";
         commentContainers.style = "text-align: center; font-style: italic"
         mainElement.appendChild(commentContainers);
-        return
+        return;
     }
 
     for (let i = 0; i < commentList.length; i++) {
