@@ -52,7 +52,8 @@
 }
 
 @media only screen and (min-width: 1024px) {
-    .normal-sidebar {
+
+    #sidebar {
         max-width: 25%;
         height: auto;
         position: static;
@@ -69,7 +70,7 @@
         }
     }
 
-    .normal-sidebar:hover {
+    #sidebar:hover {
         max-width: 25%;
         display: inline;
         flex-direction: initial;
