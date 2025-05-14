@@ -56,7 +56,6 @@ function makeOpinionFields(username) {
         const textLabel = document.createElement("h3");
         const textInput = document.createElement("textarea");
         const submitBtn = document.createElement("button");
-        const messageP = document.createElement("p");
         
         postOpinionBtn.remove();
 
@@ -80,7 +79,6 @@ function makeOpinionFields(username) {
 
         titleInput.setAttribute("placeholder", "Enter title here");
         textInput.setAttribute("placeholder", "Enter text here");
-        messageP.setAttribute("id", "message");
         
         //styling and classes
         opinionSection.style = "display: flex; flex-direction: column; align-content: center; gap: 0.5rem; max-width: 1300px;"
@@ -88,15 +86,14 @@ function makeOpinionFields(username) {
         textLabel.style = "text-align: center;"
         textInput.style = "height: 30rem; padding: 0.25rem; white-space: pre-wrap; overflow-wrap: break-word; border: 1px solid rgb(62, 62, 62); border-radius: 0.5rem;";
         authorName.style = "align-self: end;"
-        messageP.style = "color: white; background-color: rgb(255, 104, 00); border-radius: 0.5rem; padding: 0.5rem; align-self: end;"
-
+       
         submitBtn.addEventListener("click", (event) => {
                 event.preventDefault();
                 postOpinion(titleInput.value, textInput.value, username)
         });
 
         mainElement.append(opinionSection);
-        opinionSection.append(descriptionText, titleLabel, titleInput, textLabel, textInput, authorName, submitBtn, messageP);
+        opinionSection.append(descriptionText, titleLabel, titleInput, textLabel, textInput, authorName, submitBtn);
 }
 
  function postOpinion(title, text, username) {

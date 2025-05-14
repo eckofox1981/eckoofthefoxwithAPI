@@ -28,3 +28,13 @@ export function saveObjectListOfComments (opinionNumber, commentList) {
     const stringified = JSON.stringify(commentList);
     localStorage.setItem(`commentsFor${opinionNumber}`, stringified);
 }
+
+export function deleteListOfObjectComments (opinionNumber) {
+    if (!localStorage.getItem(`commentsFor${opinionNumber}`)) {
+        console.log("no commment");
+        return;
+    }
+    console.log("removing " + opinionNumber);
+    
+    localStorage.removeItem(`commentsFor${opinionNumber}`);
+}

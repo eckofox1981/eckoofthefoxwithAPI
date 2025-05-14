@@ -56,4 +56,9 @@ function submitComment(textArea, opinionNumber) {
         comment.save();
         commentContainers.append(comment.publish());
         textArea.value = "";
+        //gives time for toast to show
+        setTimeout(() => { 
+                window.location.reload();
+        }, 3000);
+        return;
 }

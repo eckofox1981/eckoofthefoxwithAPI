@@ -36,6 +36,7 @@ export class Comment {
                 opinionCommentList.push(this);
                 saveObjectListOfComments(this.opinionNumber, opinionCommentList);
                 showToast("Your comment was saved.");
+                
         }
 
         publish() {

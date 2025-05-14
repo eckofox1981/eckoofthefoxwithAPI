@@ -1,7 +1,7 @@
 import { showCommentConsole } from "../pages/comment.js";
 import { showToast, isLoggedin } from "../pages/main.js";
 import { listOfObjectOpinions, saveObjectListOfOpinions } from "./listOfOpinions.js";
-
+import { deleteListOfObjectComments } from "./listOfComments.js";
 
 
 export class Opinion  {
@@ -206,13 +206,14 @@ export class Opinion  {
                 let listOfOpinions = listOfObjectOpinions();
                 for (let i = 0; i < listOfOpinions.length; i++) {
                         if (listOfOpinions[i].opinionNumber === this.opinionNumber) {
+                                deleteListOfObjectComments(this.opinionNumber);
                                 listOfOpinions.splice(i, 1);
                                 saveObjectListOfOpinions(listOfOpinions);
                                 
                                 showToast(`Opinion "${this.title}" was deleted.`);
                                 //gives time for toast to show
                                 setTimeout(() => { 
-                                        window.location.reload();
+                                        window.location.href = "../opinions.html";
                                 }, 3000);
                                 return;
                         }
