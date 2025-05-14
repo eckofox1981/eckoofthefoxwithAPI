@@ -289,6 +289,49 @@ footer > div {
 
 }
 
+.index-opinion {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgb(62, 62, 62);
+    width: 100%;
+}
+
+.index-opinion > a {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    align-items: center;
+    h3 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Mr Dafoe;
+        font-size: 1.75rem;
+        height: 4rem;
+        width: 4rem;
+        border: 1px solid rgba(62, 62, 62, 0.95);
+        border-radius: 2rem;
+    }
+    h4 {
+        text-align: left;
+        text-wrap: wrap;
+        font-size: 1.25 rem;
+    }
+}
+
+.index-opinion > p {
+    font-size: 0.875rem;
+    line-height: calc(1.4286);
+}
+
+.index-opinion:hover {
+    border: 2px solid rgb(62, 62, 62);
+    h3 {
+        background-color: rgba(255, 104, 0, 0.75);
+    }
+}
+
 @media only screen and (max-width: 640px) {
     footer ul {
         display: none;
@@ -308,12 +351,23 @@ footer > div {
             font-size: x-small;
         }
     }
-    
+}
+
+@media  only screen  and (min-width: 1024) {
+    .index-opinion {
+        width: 40%;
+    }
 }
 
 @media only screen and (max-width: 1024px) {
     .sidebar {
         display: none;
+    }
+}
+
+@media only screen and (min-width: 1080px) {
+    .index-opinion {
+        width: 22%;
     }
 }
 
@@ -364,3 +418,4 @@ footer > div {
   from {top: 10%; opacity: 1;} 
   to {top: 0; opacity: 0;}
 }
+

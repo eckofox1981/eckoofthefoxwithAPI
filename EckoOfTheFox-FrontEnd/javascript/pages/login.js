@@ -31,10 +31,8 @@ function checkLoginStatus() {
                 let user = localStorage.getItem("activeUser");
                 user = JSON.parse(user);
                 showAccount(user);
-        } else {
-          console.log("hmmm.... :/ try loging in(?)");
-        }
-      }
+        } 
+}
 
 
 

@@ -204,13 +204,10 @@ export class Opinion  {
 
         delete() {
                 let listOfOpinions = listOfObjectOpinions();
-                console.log( this.opinionNumber, listOfOpinions)
                 for (let i = 0; i < listOfOpinions.length; i++) {
                         if (listOfOpinions[i].opinionNumber === this.opinionNumber) {
                                 listOfOpinions.splice(i, 1);
                                 saveObjectListOfOpinions(listOfOpinions);
-                                
-                                console.log(listOfObjectOpinions());
                                 
                                 showToast(`Opinion "${this.title}" was deleted.`);
                                 //gives time for toast to show
