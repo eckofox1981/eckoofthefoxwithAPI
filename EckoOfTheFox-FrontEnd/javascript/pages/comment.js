@@ -38,7 +38,7 @@ export function showCommentConsole(incomingCommentDiv, commentBtn, opinionNumber
         buttons.append(cancelBtn, submitBtn);
 }
 
-function submitComment(textArea, opinionNumber) {
+function submitComment(textArea, opinionNumber) { 
         const commentContainers = document.getElementById("commentSection");
         
         let opinionCommentList = listOfObjectComments(opinionNumber);
