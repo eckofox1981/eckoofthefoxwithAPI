@@ -64,7 +64,7 @@ export class Opinion  {
                 opinionParagraph.id = this.opinionNumber;
                 //styling
                 likeBar.style = "display: flex; gap: 0.25rem; align-items: center; justify-content: flex-end; margin-right: 1rem";
-                commentBtn.style = "max-height: fit-content; margin-right: 1rem;"
+                commentBtn.style = "margin-right: 1rem; line-height: 1rem"
                 likeSymbol.setAttribute('fill', 'rgb(62, 62, 62)');
                 likeSymbol.setAttribute('height', '1rem');
                 likeSymbol.setAttribute('width', '1rem');
